@@ -1,7 +1,12 @@
 const inView = require('in-view'),
       shortid = require('shortid')
 // check if is defined
-const isDefine = (v) =>{return typeof v !== 'undefined'}
+const isDefine = (v) =>{return typeof v !== 'undefined'},
+      isString = (v) =>{return typeof v === 'string'},
+      isNumber = (v) =>{return typeof v === 'number'},
+      isFunc   = (v) =>{return typeof v === 'function'},
+      isArray  = (v) =>{return Array.isArray(v)}
+      isObject = (v) =>{return !isArray(v) && typeof v === 'object'}
 // check if in object in array has same value
 const hasObj_Array = (v,search,val) => {
   const defined = Object.create(null)
@@ -18,7 +23,8 @@ const hasObj_Array = (v,search,val) => {
   }
   return defined
 }
-let countUpdate = 0
+let countEntered = 0
+let countExits = 0
 // create element object
 const createEl = Object.create(null)
 createEl.$enter= []
@@ -65,32 +71,67 @@ const _directObj = {
     el.classList.add(classId)
     inView('.'+classId)
     .on('enter',(el)=>{
-      countUpdate += 1
+      countEntered += 1
       _element_enter(el,classId)
     })
     .on('exit',(el)=>{
-      countUpdate += 1
+      countExits += 1
       element_exit(el,classId)
     })
   }
 }
-const _$objectMixin = {}
+//has attribute
+const hasAtt = (el,att)=>{
+  let result = false
+  if(/^\.[\w]+/.test(att)){
+    let className = att.match(/^\.([\w]+)/)[1]
+    let gClass=el.className.split(' ')
+    if(gClass.indexOf(className)>-1){
+      result = true
+    }
+  }
+  if(/^\#[\w]+/.test(att)){
+    let idName = att.match(/^\#([\w]+)/)[1]
+    if(el.hasAttribute('id') && el.getAttribute('id')===idName) result = true
+  }
+  if(/^\[[\w]+=\"[\w]+\"\]$/.test(att)){
+    let attr = att.match(/^\[([\w]+)=\"([\w]+)\"\]$/)
+    let attName = attr[1]
+    let attval = attr[2]
+    if(el.hasAttribute(attName) && el.getAttribute(attName)===attval) result = true
+  }
+  if(/^\[[\w]+=\'[\w]+\'\]$/.test(att)){
+    let attr = att.match(/^\[([\w]+)=\'([\w]+)\'\]$/)
+    let attName = attr[1]
+    let attval = attr[2]
+    if(el.hasAttribute(attName) && el.getAttribute(attName)===attval) result = true
+  }
+  return result
+}
 //setTimeout
 const updateLifeCycle=(update) =>{
   let sync=()=>{
     update()
-    setTimeout(sync,)
+    setTimeout(sync,0)
   }
   sync()
 }
 // define methods inview
-const _$inview = ($_on) => {
-  let lastUpdate=0
-  updateLifeCycle(function(){
-    if(countUpdate>lastUpdate){
-      //update here
-      $_on('baba')
-      lastUpdate=countUpdate;
+const _$inview = ($arg,$opt) => {
+  let lastEnter=0
+  let lastExit=0
+  updateLifeCycle(()=>{
+    if(isDefine($opt) && isObject($opt) && isString($arg)){
+      if(countEntered>lastEnter){
+        isDefine($opt.enter) && hasAtt(createEl.enter,$arg)
+         && $opt.enter(createEl.enter)
+         lastEnter = countEntered
+      }
+      if(countExits>lastExit){
+        isDefine($opt.exit) && hasAtt(createEl.exit,$arg)
+         && $opt.exit(createEl.exit)
+         lastExit = countExits
+      }
     }
   })
 }
@@ -103,6 +144,7 @@ const _$methods = ($vm) => {
   $vm.prototype._$inview = _$inview
 }
 const _install = (Vue, Option)=>{
+  if(isDefine(Option) && isObject(Option)) inView.offset(Option);
   _directive(Vue)
   _$methods(Vue)
 }
