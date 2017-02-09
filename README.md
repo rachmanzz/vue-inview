@@ -41,6 +41,5 @@
       )
 
 
-
 #credit
 this vue-inview base on https://github.com/camwiegert/in-view
