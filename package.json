@@ -1,0 +1,29 @@
+{
+  "name": "vueinview",
+  "version": "0.1.0",
+  "description": "vue in-view",
+  "main": "./dist/vue-inview.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "devDependencies": {
+    "in-view": "^0.6.1",
+    "shortid": "^2.2.6",
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rachmanzz/vue-inview.git"
+  },
+  "keywords": [
+    "javascript",
+    "inview",
+    "plugin",
+    "vue"
+  ],
+  "author": "Muhammad Abdurrahman",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/rachmanzz/vue-inview/issues"
+  },
+  "homepage": "https://github.com/rachmanzz/vue-inview#readme"
+}
