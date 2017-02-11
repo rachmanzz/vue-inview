@@ -85,7 +85,7 @@ class without modifiers enter or leave, that same mean with enter
 
 ### aviliable next time
 
-    v-inview:on.style.enter="{'home':true}" // add Class
+    v-inview:on.style.enter="{'home':true}" // add style
 
 #credit
 this vue-inview base on https://github.com/camwiegert/in-view
