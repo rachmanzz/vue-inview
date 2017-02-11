@@ -1,5 +1,9 @@
 # vue-inview Beta
 
+## Install
+
+    npm install --save vueinview
+
 ## Usage
 
 ### set Vue Directive
@@ -21,7 +25,7 @@
         {
           el : '#app',
           mounted(){
-
+            // magic properties
             this._$inview('#viewMe',{
                 enter:(el)=>{
                   el.style.backgroundColor = "#D93600";
@@ -40,6 +44,46 @@
         }
       )
 
+# Directive with argument (without magic properties)
+
+    v-inview="methodsName" || v-inview:on="methodsName" || v-inview:once="methodsName"
+
+## Vue Instance
+
+    new Vue({
+        el :"#app",
+        methods:{
+          methodsName(node){
+            node.enter = (el)=>{/* logic code */}
+            node.exit = (el)=>{/* logic code */}  
+          }
+        }
+      })
+
+## modifiers
+
+    v-inview:on.class="{'home':true}" // add Class
+    v-inview:on.class.enter="{'home':false}" // add remove
+    v-inview:on.class.enter="'home'" // add single class
+    v-inview:on.class.enter="['home','page']" // add many class
+
+enter modifiers : when a DOM element enters
+leave modifiers : when a DOM element exits
+class without modifiers enter or leave, that same mean with enter
+
+    v-inview:on.enter="methodsName" || v-inview:once.enter="methodsName"
+    v-inview:on.leave="methodsName" || v-inview:once.leave="methodsName"
+
+
+### Vue Instance
+
+    methodsName(el){
+      el.style.backgroundColor='#000'
+    }
+
+### aviliable next time
+
+    v-inview:on.style.enter="{'home':true}" // add Class
 
 #credit
 this vue-inview base on https://github.com/camwiegert/in-view

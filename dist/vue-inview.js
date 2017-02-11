@@ -5,8 +5,16 @@ const isDefine = (v) =>{return typeof v !== 'undefined'},
       isString = (v) =>{return typeof v === 'string'},
       isNumber = (v) =>{return typeof v === 'number'},
       isFunc   = (v) =>{return typeof v === 'function'},
-      isArray  = (v) =>{return Array.isArray(v)}
+      isArray  = (v) =>{return Array.isArray(v)},
       isObject = (v) =>{return !isArray(v) && typeof v === 'object'}
+
+const objLength= (v) => {
+  let result=0
+  for(let key in v){
+      v.hasOwnProperty(key) && result++
+  }
+  return result
+}
 // check if in object in array has same value
 const hasObj_Array = (v,search,val) => {
   const defined = Object.create(null)
@@ -33,7 +41,7 @@ createEl.enter = ''
 createEl.exit = ''
 // ######################################
 
-// add element antered
+// add element enter
 const _element_enter = (el,classid) => {
   createEl.enter = el
   let cElm_exits =createEl.$exits.length
@@ -43,7 +51,7 @@ const _element_enter = (el,classid) => {
       createEl.$exits.splice(i,1)
     }
   }
-  // push element entered
+  // push element enter
   if(!hasObj_Array(createEl.$enter,'class',classid).is) createEl.$enter.push({class:classid,el:el})
 }
 // add element exits
@@ -63,20 +71,80 @@ const element_exit = (el, classid) => {
 
 // define plugin
 const vue_inview = () => {}
+const _$eventview=(arg,classId,callback)=>{
+  let view=inView('.'+classId)
+  arg === 'on' ? view.on('enter',callback.enter).on('exit',callback.exit) :
+  arg === 'once' ? view.once('enter',callback.enter).once('exit',callback.exit) :
+  console.warn('[in-view] event handler not found')
 
+}
+const object_modifiers =($m)=>{
+  let convert
+  for(let key in $m){
+    if($m.hasOwnProperty(key) && $m[key] === true){
+      if(isDefine(convert)) convert +='.'+key
+      else convert= key
+    }
+  }
+  return convert
+}
+
+const object_class = (clss,el) =>{
+  if(isString(clss)) el.classList.add(clss)
+  if(isObject(clss)) {
+    let classArr = el.className.split(' ')
+    for(let key in clss){
+      if(classArr.indexOf(key) && clss[key]===false) el.classList.remove(key)
+      if(clss.hasOwnProperty(key) && clss[key]===true) el.classList.add(key)
+    }
+  }
+  if(isArray(clss)){
+    for(let i=0;i < clss.length; i++){
+      el.classList.add(clss[i])
+    }
+  }
+}
 // define directive object
 const _directObj = {
-  inserted : (el) => {
+  inserted : (el,$bd) => {
     let classId = shortid.generate()
     el.classList.add(classId)
-    inView('.'+classId)
-    .on('enter',(el)=>{
-      countEntered += 1
-      _element_enter(el,classId)
-    })
-    .on('exit',(el)=>{
-      countExits += 1
-      element_exit(el,classId)
+    //check arguments
+    let ev = !isDefine($bd.arg) || $bd.arg !== 'once' ? isDefine($bd.arg) && $bd.arg !== 'on' ? 'undefined' : 'on' : 'once'
+    let resview = Object.create(null)
+    // check directive has value without argument or modifiers is null
+    if(!isDefine($bd.arg) || objLength($bd.modifiers) === 0  && isDefine($bd.value)) isFunc($bd.value) && $bd.value(resview)
+
+    _$eventview(ev,classId,{
+      enter : (el)=>{
+        // for magic properties
+        countEntered += 1
+        _element_enter(el,classId)
+        // end magic properties
+        if(objLength($bd.modifiers)>0 && isDefine($bd.value)){
+          let $mdf = object_modifiers($bd.modifiers)
+          if($mdf === 'enter') isFunc($bd.value) ? $bd.value(el) : console.warn('[in-view:${$bd.expression}] expression is not methods')
+          $mdf === 'class' || $mdf === 'class.enter' && object_class($bd.value,el)
+          //$mdf === 'style' || $mdf === 'style.enter' && object_style($bd.value,el)
+        }
+        // call function enter
+        isDefine(resview.enter) && resview.enter(el)
+      },
+      exit : (el)=>{
+        // for magic properties
+        countExits += 1
+        element_exit(el,classId)
+        // end magic properties
+        // check if has modifiers
+        if(objLength($bd.modifiers)>0 && isDefine($bd.value)){
+          let $mdf = object_modifiers($bd.modifiers)
+          // leave modifiers
+          if($mdf === 'leave') isFunc($bd.value) ? $bd.value(el) : console.warn('[in-view:${$bd.expression}] expression is not methods')
+          // class leave modifiers
+          $mdf === 'class.leave' && object_class($bd.value,el)
+        }
+        isDefine(resview.exit) && resview.exit(el)
+      }
     })
   }
 }
@@ -149,5 +217,8 @@ const _install = (Vue, Option)=>{
   _$methods(Vue)
 }
 vue_inview.install = _install
+vue_inview.threshold = (c) =>{
+  inView.threshold(c)
+}
 
 module.exports = vue_inview

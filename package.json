@@ -1,6 +1,6 @@
 {
   "name": "vueinview",
-  "version": "0.1.1",
+  "version": "0.1.3",
   "description": "vue in-view",
   "main": "./dist/vue-inview.js",
   "scripts": {
