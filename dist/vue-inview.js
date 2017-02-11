@@ -220,5 +220,8 @@ vue_inview.install = _install
 vue_inview.threshold = (c) =>{
   inView.threshold(c)
 }
+vue_inview.offset = (c) => {
+  inView.offset(c)
+}
 
 module.exports = vue_inview

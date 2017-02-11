@@ -83,9 +83,17 @@ class without modifiers enter or leave, that same mean with enter
       el.style.backgroundColor='#000'
     }
 
+
+## in-view offset & threshold
+
+    Vue.use(vueInview,{/*set Inview offset*/})
+    //or
+    vueInview.offset(/*set Inview offset*/)
+    vueInview.threshold(/* set threshold */)
+
 ### aviliable next time
 
-    v-inview:on.style.enter="{'home':true}" // add style
+    v-inview:on.style.enter="{'background-color':'#000'}" // add style
 
 #credit
 this vue-inview base on https://github.com/camwiegert/in-view
