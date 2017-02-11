@@ -62,8 +62,8 @@
 
 ## modifiers
 
-    v-inview:on.class="{'home':true}" // add Class
-    v-inview:on.class.enter="{'home':false}" // add remove
+    v-inview:on.class="{'home':true}" // add class
+    v-inview:on.class.enter="{'home':false}" // remove class
     v-inview:on.class.enter="'home'" // add single class
     v-inview:on.class.enter="['home','page']" // add many class
 
