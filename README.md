@@ -1,8 +1,13 @@
 # vue-inview Beta
 
+## bug under fix, some function getting error
+
 ## Install
 
     npm install --save vueinview
+    or later version
+    npm install --save rachmanzz/vue-inview
+
 
 ## Usage
 
