@@ -1,6 +1,5 @@
 # vue-inview Beta
 
-## bug under fix, some function getting error
 
 ## Install
 
