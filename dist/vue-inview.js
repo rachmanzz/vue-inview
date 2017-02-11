@@ -9,7 +9,7 @@ var isDefine = (v) =>{return typeof v !== 'undefined'},
       isObject = (v) =>{return !isArray(v) && typeof v === 'object'}
 
 var objLength= (v) => {
-  let result=0
+  var result=0
   for(let key in v){
       v.hasOwnProperty(key) && result++
   }
@@ -44,7 +44,7 @@ createEl.exit = ''
 // add element enter
 var _element_enter = (el,classid) => {
   createEl.enter = el
-  let cElm_exits =createEl.$exits.length
+  var cElm_exits =createEl.$exits.length
   // remove element if has exits
   for(let i=0;i < cElm_exits; i++){
     if(isDefine(createEl.$exits[i]) && isDefine(createEl.$exits[i]) && createEl.$exits[i].class === classid){
@@ -57,7 +57,7 @@ var _element_enter = (el,classid) => {
 // add element exits
 var element_exit = (el, classid) => {
   createEl.exit = el
-  let cElm_enter =createEl.$enter.length
+  var cElm_enter =createEl.$enter.length
   // remove element if has enter
   for(let i=0;i < cElm_enter; i++){
     if(isDefine(createEl.$enter[i]) && isDefine(createEl.$enter[i].class) && createEl.$enter[i].class === classid){
@@ -72,14 +72,14 @@ var element_exit = (el, classid) => {
 // define plugin
 var vue_inview = () => {}
 var _$eventview=(arg,classId,callback)=>{
-  let view=inView('.'+classId)
+  var view=inView('.'+classId)
   arg === 'on' ? view.on('enter',callback.enter).on('exit',callback.exit) :
   arg === 'once' ? view.once('enter',callback.enter).once('exit',callback.exit) :
   console.warn('[in-view] event handler not found')
 
 }
 var object_modifiers =($m)=>{
-  let convert
+  var convert
   for(let key in $m){
     if($m.hasOwnProperty(key) && $m[key] === true){
       if(isDefine(convert)) convert +='.'+key
@@ -92,7 +92,7 @@ var object_modifiers =($m)=>{
 var object_class = (clss,el) =>{
   if(isString(clss)) el.classList.add(clss)
   if(isObject(clss)) {
-    let classArr = el.className.split(' ')
+    var classArr = el.className.split(' ')
     for(let key in clss){
       if(classArr.indexOf(key) && clss[key]===false) el.classList.remove(key)
       if(clss.hasOwnProperty(key) && clss[key]===true) el.classList.add(key)
@@ -107,11 +107,11 @@ var object_class = (clss,el) =>{
 // define directive object
 var _directObj = {
   inserted : (el,$bd) => {
-    let classId = shortid.generate()
+    var classId = shortid.generate()
     el.classList.add(classId)
     //check arguments
-    let ev = !isDefine($bd.arg) || $bd.arg !== 'once' ? isDefine($bd.arg) && $bd.arg !== 'on' ? 'undefined' : 'on' : 'once'
-    let resview = Object.create(null)
+    var ev = !isDefine($bd.arg) || $bd.arg !== 'once' ? isDefine($bd.arg) && $bd.arg !== 'on' ? 'undefined' : 'on' : 'once'
+    var resview = Object.create(null)
     // check directive has value without argument or modifiers is null
     if(!isDefine($bd.arg) || objLength($bd.modifiers) === 0  && isDefine($bd.value)) isFunc($bd.value) && $bd.value(resview)
 
@@ -150,7 +150,7 @@ var _directObj = {
 }
 //has attribute
 var hasAtt = (el,att)=>{
-  let result = false
+  var result = false
   if(/^\.[\w]+/.test(att)){
     let className = att.match(/^\.([\w]+)/)[1]
     let gClass=el.className.split(' ')
@@ -186,8 +186,8 @@ var updateLifeCycle=(update) =>{
 }
 // define methods inview
 var _$inview = ($arg,$opt) => {
-  let lastEnter=0
-  let lastExit=0
+  var lastEnter=0
+  var lastExit=0
   updateLifeCycle(()=>{
     if(isDefine($opt) && isObject($opt) && isString($arg)){
       if(countEntered>lastEnter){
