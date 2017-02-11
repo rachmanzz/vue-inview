@@ -68,7 +68,9 @@
     v-inview:on.class.enter="['home','page']" // add many class
 
 enter modifiers : when a DOM element enters
+
 leave modifiers : when a DOM element exits
+
 class without modifiers enter or leave, that same mean with enter
 
     v-inview:on.enter="methodsName" || v-inview:once.enter="methodsName"
