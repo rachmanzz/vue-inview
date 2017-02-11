@@ -1,14 +1,14 @@
-const inView = require('in-view'),
+var inView = require('in-view'),
       shortid = require('shortid')
 // check if is defined
-const isDefine = (v) =>{return typeof v !== 'undefined'},
+var isDefine = (v) =>{return typeof v !== 'undefined'},
       isString = (v) =>{return typeof v === 'string'},
       isNumber = (v) =>{return typeof v === 'number'},
       isFunc   = (v) =>{return typeof v === 'function'},
       isArray  = (v) =>{return Array.isArray(v)},
       isObject = (v) =>{return !isArray(v) && typeof v === 'object'}
 
-const objLength= (v) => {
+var objLength= (v) => {
   let result=0
   for(let key in v){
       v.hasOwnProperty(key) && result++
@@ -16,7 +16,7 @@ const objLength= (v) => {
   return result
 }
 // check if in object in array has same value
-const hasObj_Array = (v,search,val) => {
+var hasObj_Array = (v,search,val) => {
   const defined = Object.create(null)
   defined.is = false
   defined.count = 0
@@ -31,10 +31,10 @@ const hasObj_Array = (v,search,val) => {
   }
   return defined
 }
-let countEntered = 0
-let countExits = 0
+var countEntered = 0
+var countExits = 0
 // create element object
-const createEl = Object.create(null)
+var createEl = Object.create(null)
 createEl.$enter= []
 createEl.$exits= []
 createEl.enter = ''
@@ -42,7 +42,7 @@ createEl.exit = ''
 // ######################################
 
 // add element enter
-const _element_enter = (el,classid) => {
+var _element_enter = (el,classid) => {
   createEl.enter = el
   let cElm_exits =createEl.$exits.length
   // remove element if has exits
@@ -55,7 +55,7 @@ const _element_enter = (el,classid) => {
   if(!hasObj_Array(createEl.$enter,'class',classid).is) createEl.$enter.push({class:classid,el:el})
 }
 // add element exits
-const element_exit = (el, classid) => {
+var element_exit = (el, classid) => {
   createEl.exit = el
   let cElm_enter =createEl.$enter.length
   // remove element if has enter
@@ -70,15 +70,15 @@ const element_exit = (el, classid) => {
 }
 
 // define plugin
-const vue_inview = () => {}
-const _$eventview=(arg,classId,callback)=>{
+var vue_inview = () => {}
+var _$eventview=(arg,classId,callback)=>{
   let view=inView('.'+classId)
   arg === 'on' ? view.on('enter',callback.enter).on('exit',callback.exit) :
   arg === 'once' ? view.once('enter',callback.enter).once('exit',callback.exit) :
   console.warn('[in-view] event handler not found')
 
 }
-const object_modifiers =($m)=>{
+var object_modifiers =($m)=>{
   let convert
   for(let key in $m){
     if($m.hasOwnProperty(key) && $m[key] === true){
@@ -89,7 +89,7 @@ const object_modifiers =($m)=>{
   return convert
 }
 
-const object_class = (clss,el) =>{
+var object_class = (clss,el) =>{
   if(isString(clss)) el.classList.add(clss)
   if(isObject(clss)) {
     let classArr = el.className.split(' ')
@@ -105,7 +105,7 @@ const object_class = (clss,el) =>{
   }
 }
 // define directive object
-const _directObj = {
+var _directObj = {
   inserted : (el,$bd) => {
     let classId = shortid.generate()
     el.classList.add(classId)
@@ -149,7 +149,7 @@ const _directObj = {
   }
 }
 //has attribute
-const hasAtt = (el,att)=>{
+var hasAtt = (el,att)=>{
   let result = false
   if(/^\.[\w]+/.test(att)){
     let className = att.match(/^\.([\w]+)/)[1]
@@ -177,7 +177,7 @@ const hasAtt = (el,att)=>{
   return result
 }
 //setTimeout
-const updateLifeCycle=(update) =>{
+var updateLifeCycle=(update) =>{
   let sync=()=>{
     update()
     setTimeout(sync,0)
@@ -185,7 +185,7 @@ const updateLifeCycle=(update) =>{
   sync()
 }
 // define methods inview
-const _$inview = ($arg,$opt) => {
+var _$inview = ($arg,$opt) => {
   let lastEnter=0
   let lastExit=0
   updateLifeCycle(()=>{
@@ -204,14 +204,14 @@ const _$inview = ($arg,$opt) => {
   })
 }
 // define directive
-const _directive = ($vm) => {
+var _directive = ($vm) => {
   $vm.directive('inview',_directObj)
 }
 // define methods
-const _$methods = ($vm) => {
+var _$methods = ($vm) => {
   $vm.prototype._$inview = _$inview
 }
-const _install = (Vue, Option)=>{
+var _install = (Vue, Option)=>{
   if(isDefine(Option) && isObject(Option)) inView.offset(Option);
   _directive(Vue)
   _$methods(Vue)
