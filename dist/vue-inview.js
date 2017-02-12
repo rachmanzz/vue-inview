@@ -327,4 +327,4 @@ vue_inview.offset = (c) => {
   inView.offset(c)
 }
 
-module.exports = vue_inview
+window.vueinview= vue_inview
