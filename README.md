@@ -48,8 +48,8 @@ Directive argument & modifiers
     import v_inview from 'vueinview'
 
     Vue.use(v_inview)
-    v_inview.offset(/* offset */)
-    v_inview.threshold(/* threshold */)
+    // v_inview.offset(/* offset */)
+    // v_inview.threshold(/* threshold */)
 
     new Vue({
         el:'#app',

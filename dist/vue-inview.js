@@ -221,8 +221,14 @@ var _$elinview = (el,$bd)=>{
       element_exit(el,classId)
       // end magic properties
 
-      if(_$arg !== 'undefined' && objLength($bd.modifiers)===0 && isDefine($bd.value)){
-        if(_$arg === 'leave') isFunc($bd.value) ? $bd.value(el) : console.warn('[in-view:${$bd.expression}] invalid method')
+      if(_$arg !== 'undefined' && isDefine($bd.value)){
+        if(_$arg === 'leave' && objLength($bd.modifiers)===0) isFunc($bd.value) ? $bd.value(el) : console.warn('[in-view:${$bd.expression}] invalid method')
+
+        if(objLength($bd.modifiers) > 0 && object_modifiers($bd.modifiers) === 'leave'){
+          _$arg === 'class' && object_class($bd.value,el)
+          _$arg === 'style' && object_style($bd.value,el)
+        }
+
       }
       // check if has modifiers
       if(_$arg === 'on' || _$arg === 'once' && objLength($bd.modifiers)>0 && isDefine($bd.value)){
