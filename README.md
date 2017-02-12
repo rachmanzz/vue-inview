@@ -3,8 +3,8 @@
 ## Releases version
 
 - v0.2.2 [Later version](https://github.com/rachmanzz/vue-inview)
-  1. fix: bugs modifiers leave 
-- v0.2.1 [Later version](https://github.com/rachmanzz/vue-inview)
+  1. fix: bugs modifiers leave
+- v0.2.1 
   1. eliminate some modifiers
   2. add style argument & modifiers
   3. on element updated in-view
