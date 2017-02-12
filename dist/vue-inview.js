@@ -39,7 +39,6 @@ createEl.$enter= []
 createEl.$exits= []
 createEl.enter = ''
 createEl.exit = ''
-// ######################################
 
 // add element enter
 var _element_enter = (el,classid) => {
@@ -69,15 +68,30 @@ var element_exit = (el, classid) => {
 
 }
 
+var cssjs=(css)=>{
+  css=css.split('-')
+  var result = css[0] === 'float' ? 'cssFloat' : css[0]
+  var size = css.length
+  if( size > 1 ) {
+    for(let i=0; i < size; i++){
+      if(i > 0) result += css[i].charAt(0).toUpperCase() + css[i].substr(1)
+    }
+  }
+  return result
+}
+
 // define plugin
 var vue_inview = () => {}
+
+// inview handler
 var _$eventview=(arg,classId,callback)=>{
   var view=inView('.'+classId)
   arg === 'on' ? view.on('enter',callback.enter).on('exit',callback.exit) :
   arg === 'once' ? view.once('enter',callback.enter).once('exit',callback.exit) :
   console.warn('[in-view] event handler not found')
-
 }
+
+// object modifiers
 var object_modifiers =($m)=>{
   var convert
   for(let key in $m){
@@ -89,6 +103,41 @@ var object_modifiers =($m)=>{
   return convert
 }
 
+// validate argument
+var $arg=(arg)=>{
+  var result
+  switch (arg) {
+    case 'on':
+      result = arg
+      break;
+    case 'once':
+      result = arg
+      break;
+    case 'class':
+      result = arg
+      break;
+    case 'style':
+      result = arg
+      break;
+    case 'enter':
+      result = arg
+      break;
+    case 'leave':
+      result = arg
+      break;
+    default:
+      console.warn('[in-view] argument ${arg} undefined');
+  }
+  return result
+}
+
+//default action
+var defaultAction = (bidd,callback) => {
+  if(!isDefine(bidd.arg)) callback()
+  if(bidd.arg === 'on' || bidd.arg === 'once' && objLength(bidd.modifiers) === 0) callback()
+}
+
+// add / remove class
 var object_class = (clss,el) =>{
   if(isString(clss)) el.classList.add(clss)
   if(isObject(clss)) {
@@ -104,50 +153,103 @@ var object_class = (clss,el) =>{
     }
   }
 }
+
+// add / remove style
+var object_style = (css,el) =>{
+  var style = el.style
+  if(isObject(css)){
+    for(let key in css){
+      if(isDefine(style[cssjs(key)])) style[cssjs(key)] = css[key]
+    }
+  }
+  if(isArray(css)){
+    var size = css.length
+    for(let i=0; i < size; i++){
+      if(isDefine(style[cssjs(css[i])])) style[cssjs(css[i])] = ""
+    }
+  }
+}
+
+//element inview
+var _$elinview = (el,$bd)=>{
+  // generate class indetities
+  var classId = shortid.generate()
+  // add class indetities
+  el.classList.add(classId)
+
+  // register handler
+  var regHdlr = !isDefine($bd.arg) ? 'on' : isDefine($arg($bd.arg)) && $arg($bd.arg) === 'once' ? 'once' : isDefine($arg($bd.arg)) ?
+                'on' : 'undefined'
+
+  // object function on enter and exit
+  var funcEvent = Object.create(null)
+
+  // default event handler
+  defaultAction($bd,()=>{
+    if(isFunc($bd.value)) $bd.value(funcEvent)
+  })
+
+  var _$arg = isDefine($arg($bd.arg)) && $arg($bd.arg) !== 'on' || $arg($bd.arg) === 'once' ? $arg($bd.arg) : 'undefined'
+  _$eventview(regHdlr,classId,{
+    enter : (el)=>{
+      // for magic properties
+      countEntered += 1
+      _element_enter(el,classId)
+      // end magic properties
+      if(_$arg !== 'undefined' && objLength($bd.modifiers)===0 && isDefine($bd.value)){
+          _$arg === 'class' && object_class($bd.value,el)
+          _$arg === 'style' && object_style($bd.value,el)
+          if(_$arg === 'enter') isFunc($bd.value) ? $bd.value(el) : console.warn('[in-view:${$bd.expression}] invalid method')
+      }
+
+      if(_$arg === 'on' || _$arg === 'once' && objLength($bd.modifiers)>0 && isDefine($bd.value)){
+        // register modifiers
+        let $mdf = object_modifiers($bd.modifiers)
+        // modifiers enter
+        if($mdf === 'enter') isFunc($bd.value) ? $bd.value(el) : console.warn('[in-view:${$bd.expression}] invalid method')
+        // modifiers class
+        $mdf === 'class' && object_class($bd.value,el)
+        // modifiers style
+        $mdf === 'style' && object_style($bd.value,el)
+      }
+
+      isDefine(funcEvent.enter) && funcEvent.enter(el)
+    },
+    exit : (el)=>{
+      // for magic properties
+      countExits += 1
+      element_exit(el,classId)
+      // end magic properties
+
+      if(_$arg !== 'undefined' && objLength($bd.modifiers)===0 && isDefine($bd.value)){
+        if(_$arg === 'leave') isFunc($bd.value) ? $bd.value(el) : console.warn('[in-view:${$bd.expression}] invalid method')
+      }
+      // check if has modifiers
+      if(_$arg === 'on' || _$arg === 'once' && objLength($bd.modifiers)>0 && isDefine($bd.value)){
+        // register modifiers
+        let $mdf = object_modifiers($bd.modifiers)
+        // modifiers leave
+        if($mdf === 'leave') isFunc($bd.value) ? $bd.value(el) : console.warn('[in-view:${$bd.expression}] invalid method')
+        // leave : class modifiers
+        $mdf === 'class.leave' && object_class($bd.value,el)
+        // leave : style modifiers
+        $mdf === 'style.leave' && object_style($bd.value,el)
+      }
+
+      isDefine(funcEvent.exit) && funcEvent.exit(el)
+    }
+  })
+}
 // define directive object
 var _directObj = {
   inserted : (el,$bd) => {
-    var classId = shortid.generate()
-    el.classList.add(classId)
-    //check arguments
-    var ev = !isDefine($bd.arg) || $bd.arg !== 'once' ? isDefine($bd.arg) && $bd.arg !== 'on' ? 'undefined' : 'on' : 'once'
-    var resview = Object.create(null)
-    // check directive has value without argument or modifiers is null
-    if(!isDefine($bd.arg) || objLength($bd.modifiers) === 0  && isDefine($bd.value)) isFunc($bd.value) && $bd.value(resview)
-
-    _$eventview(ev,classId,{
-      enter : (el)=>{
-        // for magic properties
-        countEntered += 1
-        _element_enter(el,classId)
-        // end magic properties
-        if(objLength($bd.modifiers)>0 && isDefine($bd.value)){
-          let $mdf = object_modifiers($bd.modifiers)
-          if($mdf === 'enter') isFunc($bd.value) ? $bd.value(el) : console.warn('[in-view:${$bd.expression}] expression is not methods')
-          $mdf === 'class' || $mdf === 'class.enter' && object_class($bd.value,el)
-          //$mdf === 'style' || $mdf === 'style.enter' && object_style($bd.value,el)
-        }
-        // call function enter
-        isDefine(resview.enter) && resview.enter(el)
-      },
-      exit : (el)=>{
-        // for magic properties
-        countExits += 1
-        element_exit(el,classId)
-        // end magic properties
-        // check if has modifiers
-        if(objLength($bd.modifiers)>0 && isDefine($bd.value)){
-          let $mdf = object_modifiers($bd.modifiers)
-          // leave modifiers
-          if($mdf === 'leave') isFunc($bd.value) ? $bd.value(el) : console.warn('[in-view:${$bd.expression}] expression is not methods')
-          // class leave modifiers
-          $mdf === 'class.leave' && object_class($bd.value,el)
-        }
-        isDefine(resview.exit) && resview.exit(el)
-      }
-    })
+    _$elinview(el,$bd)
+  },
+  componentUpdated:(el,$bd)=>{
+    _$elinview(el,$bd)
   }
 }
+
 //has attribute
 var hasAtt = (el,att)=>{
   var result = false
@@ -176,6 +278,7 @@ var hasAtt = (el,att)=>{
   }
   return result
 }
+
 //setTimeout
 var updateLifeCycle=(update) =>{
   let sync=()=>{

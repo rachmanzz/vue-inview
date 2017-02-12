@@ -1,5 +1,14 @@
 # vue-inview Beta
 
+## Releases version
+
+- v0.2.1 [Later version](https://github.com/rachmanzz/vue-inview)
+  1. eliminate some modifiers
+  2. add style argument & modifiers
+  3. on element updated in-view
+- v0.1.5 [version 0.1.5](https://github.com/rachmanzz/vue-inview/tree/v0.1.5)
+  1. bugs fix const & let global variable
+
 
 ## Install
 
@@ -9,21 +18,76 @@
 
 
 ## Usage
+### Vue Directive
 
+    <element v-inview="methods"></element>
+    <div v-inview:enter="methods"></div>
+    <div v-inview:class="['className']"></div>
+    <div v-inview:class="{'page':true}"></div>
+    <div v-inview:style="{'background-color':'#eee'}"></div>
+
+Directive argument & modifiers
+- `on` : call on DOM element enter or exit -> value : methods
+- `once` : call one time only -> value : methods
+ 1. `once.leave`
+ 2. `once.class`
+ 3. `once.class.leave`
+ 4. `once.style`
+ 5. `once.style.leave`
+- `class` add and remove class -> value : object, array, single string
+ 1. `class.leave`
+- `style`
+ 1. `style.leave` add and remove -> value : object [add], array [remove]
+- `enter` on DOM element is enter -> value : methods
+- `leave` on DOM element is leave -> value : methods
+
+## Vue Instance
+
+    const v_inview = require('vueinview')
+    // or
+    import v_inview from 'vueinview'
+
+    Vue.use(v_inview)
+    v_inview.offset(/* offset */)
+    v_inview.threshold(/* threshold */)
+
+    new Vue({
+        el:'#app',
+        methods:{
+          methodName($v){
+            // methods for on, once or without argument
+            $vi.enter =(el)=>{ // el = element DOM
+              /* logic code */
+            }
+            $vi.exit =(el)=>{
+              /* logic code */
+            }
+          },
+          methodName2(el){
+            // for enter or leave argument
+            /* logic code */
+          }
+        }
+      })
+
+### class & style
+  - class
+    1. object : `{'classname':true}` add class if true, remove class if false
+    2. string : `'classname'` add single class
+    3. array : `['classname','classname2']` add many class
+  -style
+    1. object : `{'background-color': '#eee', 'color':'#000'}` add style
+    2. array : `['background-color']` remove style
+
+
+
+# Other Way
+### Magic properties    
 ### set Vue Directive
 
-    <elementName v-inview></elementName>
     <div id="viewMe" v-inview>text or other element</div>
 
-## Load plugin
-
-    import vueInview from 'vueinview'
-
-    Vue.use(vueInview)
-    //or
-    Vue.use(vueInview,{/*set Inview offset*/})
-
-    // vue Instance
+## Vue Instance
 
     new Vue(
         {
@@ -48,56 +112,6 @@
         }
       )
 
-# Directive with argument (without magic properties)
-
-    v-inview="methodsName" || v-inview:on="methodsName" || v-inview:once="methodsName"
-
-## Vue Instance
-
-    new Vue({
-        el :"#app",
-        methods:{
-          methodsName(node){
-            node.enter = (el)=>{/* logic code */}
-            node.exit = (el)=>{/* logic code */}  
-          }
-        }
-      })
-
-## modifiers
-
-    v-inview:on.class="{'home':true}" // add class
-    v-inview:on.class.enter="{'home':false}" // remove class
-    v-inview:on.class.enter="'home'" // add single class
-    v-inview:on.class.enter="['home','page']" // add many class
-
-enter modifiers : when a DOM element enters
-
-leave modifiers : when a DOM element exits
-
-class without modifiers enter or leave, that same mean with enter
-
-    v-inview:on.enter="methodsName" || v-inview:once.enter="methodsName"
-    v-inview:on.leave="methodsName" || v-inview:once.leave="methodsName"
-
-
-### Vue Instance
-
-    methodsName(el){
-      el.style.backgroundColor='#000'
-    }
-
-
-## in-view offset & threshold
-
-    Vue.use(vueInview,{/*set Inview offset*/})
-    //or
-    vueInview.offset(/*set Inview offset*/)
-    vueInview.threshold(/* set threshold */)
-
-### aviliable next time
-
-    v-inview:on.style.enter="{'background-color':'#000'}" // add style
-
 #credit
-this vue-inview base on https://github.com/camwiegert/in-view
+- this vue-inview base on https://github.com/camwiegert/in-view
+- shortid module https://github.com/dylang/shortid
