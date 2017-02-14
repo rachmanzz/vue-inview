@@ -279,6 +279,7 @@ var _directObj = {
     _$elinview(el,$bd)
   },
   componentUpdated:(el,$bd)=>{
+    var elSize = el.classList.length
     var getclass
     // check the class has been registered
     for(let i=0;i<elSize;i++){
