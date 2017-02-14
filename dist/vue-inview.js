@@ -190,6 +190,7 @@ var _$elinview = (el,$bd)=>{
 
   // register class element
   el.classList.add(classId)
+  createEl.register.push(classId)
   // if directive value not registed
   if(!hasKey(createEl.values,classId) && isDefine($bd.value)) createEl.values[classId] = $bd.value
 
