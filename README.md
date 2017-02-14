@@ -1,9 +1,9 @@
 # vue-inview Beta
 
 ## Releases version
-- v0.2.3
+- v0.2.3 [Later version](https://github.com/rachmanzz/vue-inview)
   1. fix : twice class listed
-- v0.2.2 [Later version](https://github.com/rachmanzz/vue-inview)
+- v0.2.2 [version 0.2.2](https://github.com/rachmanzz/vue-inview/tree/v0.2.2)
   1. fix: bugs modifiers leave
 - v0.2.1
   1. eliminate some modifiers
