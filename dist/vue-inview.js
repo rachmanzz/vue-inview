@@ -8,6 +8,14 @@ var isDefine = (v) =>{return typeof v !== 'undefined'},
       isArray  = (v) =>{return Array.isArray(v)},
       isObject = (v) =>{return !isArray(v) && typeof v === 'object'}
 
+var hasKey = (obj,src) =>{
+  var result = false
+  for(key in obj){
+    if(obj.hasOwnProperty(key) && key === src) result=true
+  }
+  return result
+}
+
 var objLength= (v) => {
   var result=0
   for(let key in v){
@@ -15,6 +23,7 @@ var objLength= (v) => {
   }
   return result
 }
+
 // check if in object in array has same value
 var hasObj_Array = (v,search,val) => {
   const defined = Object.create(null)
@@ -39,7 +48,8 @@ createEl.$enter= []
 createEl.$exits= []
 createEl.enter = ''
 createEl.exit = ''
-
+createEl.register = []
+createEl.values={}
 // add element enter
 var _element_enter = (el,classid) => {
   createEl.enter = el
@@ -172,10 +182,20 @@ var object_style = (css,el) =>{
 
 //element inview
 var _$elinview = (el,$bd)=>{
+
   // generate class indetities
   var classId = shortid.generate()
-  // add class indetities
-  el.classList.add(classId)
+
+  var elSize = el.classList.length
+  var getclass
+  // check the class has been registered
+  for(let i=0;i<elSize;i++){
+    if(createEl.register.indexOf(el.classList[i]) > -1) getclass = el.classList[i]
+  }
+  // if element class not registered
+  if(!isDefine(getclass)) el.classList.add(classId); getclass = classId;
+  // if directive value not registed
+  if(!hasKey(createEl.values,getclass) && isDefine($bd.value)) createEl.values[getclass] = $bd.value
 
   // register handler
   var regHdlr = !isDefine($bd.arg) ? 'on' : isDefine($arg($bd.arg)) && $arg($bd.arg) === 'once' ? 'once' : isDefine($arg($bd.arg)) ?
@@ -186,73 +206,89 @@ var _$elinview = (el,$bd)=>{
 
   // default event handler
   defaultAction($bd,()=>{
-    if(isFunc($bd.value)) $bd.value(funcEvent)
+    if(isDefine(createEl.values[getclass]) && isFunc(createEl.values[getclass])) createEl.values[getclass](funcEvent)
   })
 
   var _$arg = isDefine($arg($bd.arg)) && $arg($bd.arg) !== 'on' || $arg($bd.arg) === 'once' ? $arg($bd.arg) : 'undefined'
-  _$eventview(regHdlr,classId,{
+  _$eventview(regHdlr,getclass,{
     enter : (el)=>{
+
+      var elvalue
+      // check the value of the directive has been registered
+      if(hasKey(createEl.values,getclass)) elvalue = createEl.values[getclass]
+
       // for magic properties
       countEntered += 1
       _element_enter(el,classId)
       // end magic properties
-      if(_$arg !== 'undefined' && objLength($bd.modifiers)===0 && isDefine($bd.value)){
-          _$arg === 'class' && object_class($bd.value,el)
-          _$arg === 'style' && object_style($bd.value,el)
-          if(_$arg === 'enter') isFunc($bd.value) ? $bd.value(el) : console.warn('[in-view:${$bd.expression}] invalid method')
+      if(_$arg !== 'undefined' && objLength($bd.modifiers)===0 && isDefine(elvalue)){
+          _$arg === 'class' && object_class(elvalue,el)
+          _$arg === 'style' && object_style(elvalue,el)
+          if(_$arg === 'enter') isFunc(elvalue) ? elvalue(el) : console.warn('[in-view:${$bd.expression}] invalid method')
       }
 
-      if(_$arg === 'on' || _$arg === 'once' && objLength($bd.modifiers)>0 && isDefine($bd.value)){
+      if(_$arg === 'on' || _$arg === 'once' && objLength($bd.modifiers)>0 && isDefine(elvalue)){
         // register modifiers
         let $mdf = object_modifiers($bd.modifiers)
         // modifiers enter
-        if($mdf === 'enter') isFunc($bd.value) ? $bd.value(el) : console.warn('[in-view:${$bd.expression}] invalid method')
+        if($mdf === 'enter') isFunc(elvalue) ? elvalue(el) : console.warn('[in-view:${$bd.expression}] invalid method')
         // modifiers class
-        $mdf === 'class' && object_class($bd.value,el)
+        $mdf === 'class' && object_class(elvalue,el)
         // modifiers style
-        $mdf === 'style' && object_style($bd.value,el)
+        $mdf === 'style' && object_style(elvalue,el)
       }
 
       isDefine(funcEvent.enter) && funcEvent.enter(el)
     },
     exit : (el)=>{
+
+      var elvalue
+      // check the value of the directive has been registered
+      if(hasKey(createEl.values,getclass)) elvalue = createEl.values[getclass]
+
       // for magic properties
       countExits += 1
       element_exit(el,classId)
       // end magic properties
 
-      if(_$arg !== 'undefined' && isDefine($bd.value)){
-        if(_$arg === 'leave' && objLength($bd.modifiers)===0) isFunc($bd.value) ? $bd.value(el) : console.warn('[in-view:${$bd.expression}] invalid method')
+      if(_$arg !== 'undefined' && isDefine(elvalue)){
+        if(_$arg === 'leave' && objLength($bd.modifiers)===0) isFunc(elvalue) ? elvalue(el) : console.warn('[in-view:${$bd.expression}] invalid method')
 
         if(objLength($bd.modifiers) > 0 && object_modifiers($bd.modifiers) === 'leave'){
-          _$arg === 'class' && object_class($bd.value,el)
-          _$arg === 'style' && object_style($bd.value,el)
+          _$arg === 'class' && object_class(elvalue,el)
+          _$arg === 'style' && object_style(elvalue,el)
         }
 
       }
       // check if has modifiers
-      if(_$arg === 'on' || _$arg === 'once' && objLength($bd.modifiers)>0 && isDefine($bd.value)){
+      if(_$arg === 'on' || _$arg === 'once' && objLength($bd.modifiers)>0 && isDefine(elvalue)){
         // register modifiers
         let $mdf = object_modifiers($bd.modifiers)
         // modifiers leave
-        if($mdf === 'leave') isFunc($bd.value) ? $bd.value(el) : console.warn('[in-view:${$bd.expression}] invalid method')
+        if($mdf === 'leave') isFunc(elvalue) ? elvalue(el) : console.warn('[in-view:${$bd.expression}] invalid method')
         // leave : class modifiers
-        $mdf === 'class.leave' && object_class($bd.value,el)
+        $mdf === 'class.leave' && object_class(elvalue,el)
         // leave : style modifiers
-        $mdf === 'style.leave' && object_style($bd.value,el)
+        $mdf === 'style.leave' && object_style(elvalue,el)
       }
 
       isDefine(funcEvent.exit) && funcEvent.exit(el)
     }
   })
 }
+
 // define directive object
 var _directObj = {
   inserted : (el,$bd) => {
     _$elinview(el,$bd)
   },
   componentUpdated:(el,$bd)=>{
-    _$elinview(el,$bd)
+    var getclass
+    // check the class has been registered
+    for(let i=0;i<elSize;i++){
+      if(createEl.register.indexOf(el.classList[i]) > -1) getclass = el.classList[i]
+    }
+    if(isDefine(getclass) && isDefine($bd.value)) createEl.values[getclass] = $bd.value
   }
 }
 
@@ -325,10 +361,13 @@ var _install = (Vue, Option)=>{
   _directive(Vue)
   _$methods(Vue)
 }
+
 vue_inview.install = _install
+
 vue_inview.threshold = (c) =>{
   inView.threshold(c)
 }
+
 vue_inview.offset = (c) => {
   inView.offset(c)
 }

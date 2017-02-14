@@ -1,10 +1,11 @@
 # vue-inview Beta
 
 ## Releases version
-
+- v0.2.3
+  1. fix : twice class listed
 - v0.2.2 [Later version](https://github.com/rachmanzz/vue-inview)
   1. fix: bugs modifiers leave
-- v0.2.1 
+- v0.2.1
   1. eliminate some modifiers
   2. add style argument & modifiers
   3. on element updated in-view
@@ -77,7 +78,7 @@ Directive argument & modifiers
     1. object : `{'classname':true}` add class if true, remove class if false
     2. string : `'classname'` add single class
     3. array : `['classname','classname2']` add many class
-  -style
+  - style
     1. object : `{'background-color': '#eee', 'color':'#000'}` add style
     2. array : `['background-color']` remove style
 
