@@ -187,15 +187,11 @@ var _$elinview = (el,$bd)=>{
   var classId = shortid.generate()
 
   var elSize = el.classList.length
-  var getclass
-  // check the class has been registered
-  for(let i=0;i<elSize;i++){
-    if(createEl.register.indexOf(el.classList[i]) > -1) getclass = el.classList[i]
-  }
-  // if element class not registered
-  if(!isDefine(getclass)) el.classList.add(classId); getclass = classId;
+
+  // register class element
+  el.classList.add(classId)
   // if directive value not registed
-  if(!hasKey(createEl.values,getclass) && isDefine($bd.value)) createEl.values[getclass] = $bd.value
+  if(!hasKey(createEl.values,classId) && isDefine($bd.value)) createEl.values[classId] = $bd.value
 
   // register handler
   var regHdlr = !isDefine($bd.arg) ? 'on' : isDefine($arg($bd.arg)) && $arg($bd.arg) === 'once' ? 'once' : isDefine($arg($bd.arg)) ?
@@ -206,16 +202,16 @@ var _$elinview = (el,$bd)=>{
 
   // default event handler
   defaultAction($bd,()=>{
-    if(isDefine(createEl.values[getclass]) && isFunc(createEl.values[getclass])) createEl.values[getclass](funcEvent)
+    if(isDefine(createEl.values[classId]) && isFunc(createEl.values[classId])) createEl.values[classId](funcEvent)
   })
 
   var _$arg = isDefine($arg($bd.arg)) && $arg($bd.arg) !== 'on' || $arg($bd.arg) === 'once' ? $arg($bd.arg) : 'undefined'
-  _$eventview(regHdlr,getclass,{
+  _$eventview(regHdlr,classId,{
     enter : (el)=>{
 
       var elvalue
       // check the value of the directive has been registered
-      if(hasKey(createEl.values,getclass)) elvalue = createEl.values[getclass]
+      if(hasKey(createEl.values,classId)) elvalue = createEl.values[classId]
 
       // for magic properties
       countEntered += 1
@@ -244,7 +240,7 @@ var _$elinview = (el,$bd)=>{
 
       var elvalue
       // check the value of the directive has been registered
-      if(hasKey(createEl.values,getclass)) elvalue = createEl.values[getclass]
+      if(hasKey(createEl.values,classId)) elvalue = createEl.values[classId]
 
       // for magic properties
       countExits += 1
