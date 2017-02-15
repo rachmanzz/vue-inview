@@ -78,6 +78,15 @@ var element_exit = (el, classid) => {
 
 }
 
+var obsclassreg=(rw)=>{
+  var result
+  rgsize = createEl.register.length
+  for(let i=0;i < rgsize;i++){
+    if(createEl.register[i].rawName === rw) result = createEl.register[i].classid
+  }
+  return result
+}
+
 var cssjs=(css)=>{
   css=css.split('-')
   var result = css[0] === 'float' ? 'cssFloat' : css[0]
@@ -190,7 +199,7 @@ var _$elinview = (el,$bd)=>{
 
   // register class element
   el.classList.add(classId)
-  createEl.register.push(classId)
+  createEl.register.push({classid:classId,rawName:$bd.rawName})
   // if directive value not registed
   if(!hasKey(createEl.values,classId) && isDefine($bd.value)) createEl.values[classId] = $bd.value
 
@@ -284,7 +293,7 @@ var _directObj = {
     var getclass
     // check the class has been registered
     for(let i=0;i<elSize;i++){
-      if(createEl.register.indexOf(el.classList[i]) > -1) getclass = el.classList[i]
+      if(isDefine(obsclassreg($bd.rawName)) && obsclassreg($bd.rawName)===el.classList[i]) getclass = el.classList[i]
     }
     if(isDefine(getclass) && isDefine($bd.value)) createEl.values[getclass] = $bd.value
   }
