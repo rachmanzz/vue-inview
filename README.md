@@ -29,7 +29,7 @@
 ## Usage
 ### Vue Directive
 
-    <element v-inview="methods"></element>
+    <element v-inview:on="methods"></element>
     <div v-inview:enter="methods"></div>
     <div v-inview:class="['className']"></div>
     <div v-inview:class="{'page':true}"></div>
