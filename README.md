@@ -1,5 +1,8 @@
 # vue-inview Beta
 
+## Tested
+|![alt text](https://upload.wikimedia.org/wikipedia/commons/thumb/e/e2/Google_Chrome_icon_%282011%29.svg/240px-Google_Chrome_icon_%282011%29.svg.png)
+
 ## Releases version
 - v0.2.3 [Later version](https://github.com/rachmanzz/vue-inview)
   1. fix : twice class listed
