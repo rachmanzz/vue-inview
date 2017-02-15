@@ -1,4 +1,4 @@
-# vue-inview Beta
+# vue-inview [beta]
 
 ## Tested
 
@@ -8,7 +8,7 @@
 
 ## Releases version
 - v0.2.3 [Later version](https://github.com/rachmanzz/vue-inview)
-  1. fix : current event 
+  1. fix : current event
 - v0.2.2 [version 0.2.2](https://github.com/rachmanzz/vue-inview/tree/v0.2.2)
   1. fix: bugs modifiers leave
 - v0.2.1
