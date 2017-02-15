@@ -64,7 +64,7 @@ Directive argument & modifiers
         el:'#app',
         methods:{
           methodName($v){
-            // methods for on, once or without argument
+            // methods for on, once or without modifiers
             $vi.enter =(el)=>{ // el = element DOM
               /* logic code */
             }
