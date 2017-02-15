@@ -4,7 +4,7 @@
 
 |chrome|firefox|
 |------|-------|
-|tested|       |
+|tested|tested |
 
 ## Releases version
 - v0.2.3 [Later version](https://github.com/rachmanzz/vue-inview)
