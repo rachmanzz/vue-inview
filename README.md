@@ -1,4 +1,4 @@
-# vue-inview [beta]
+# vue-inview (beta)
 
 ## Tested
 
