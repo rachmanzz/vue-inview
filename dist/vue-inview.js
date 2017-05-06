@@ -81,7 +81,7 @@ var element_exit = function (el, classid) {
 }
 var obsclassreg = function (rw) {
   var result
-  rgsize = createEl.register.length
+  var rgsize = createEl.register.length
   var i
   for (i = 0;i < rgsize; i++) {
     if (createEl.register[i].rawName === rw) result = createEl.register[i].classid
