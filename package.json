@@ -1,8 +1,8 @@
 {
   "name": "vueinview",
-  "version": "0.2.6",
+  "version": "0.2.7",
   "description": "vue in-view",
-  "main": "./dist/vue-inview.min.js",
+  "main": "./dist/vue-inview.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

@@ -7,7 +7,7 @@
 |tested|tested|
 
 ## Releases version
-- v0.2.6 [Later version](https://github.com/rachmanzz/vue-inview)
+- v0.2.7 [Later version](https://github.com/rachmanzz/vue-inview)
   1. fix : fix undefine rgsize
   1. fix : back to es5 for uglifyjs
   2. fix : fix writen scripts
