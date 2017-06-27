@@ -128,6 +128,7 @@ Directive argument & modifiers
       )
 
 
-##credit
+
+## Credit
 - this vue-inview base on https://github.com/camwiegert/in-view
 - shortid module https://github.com/dylang/shortid
