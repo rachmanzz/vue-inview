@@ -353,7 +353,6 @@ var _$elinview = function (el, $bd) {
   })
 }
 
-// define directive object
 /**
   * return object
     - directive object
