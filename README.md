@@ -43,19 +43,19 @@
     <div v-inview:style="{'background-color':'#eee'}"></div>
 
 Directive argument & modifiers
-- `on` : call on DOM element enter or exit -> value : methods
-- `once` : call one time only -> value : methods
- 1. `once.leave`
- 2. `once.class`
- 3. `once.class.leave`
- 4. `once.style`
- 5. `once.style.leave`
-- `class` add and remove class -> value : object, array, single string
- 1. `class.leave`
-- `style`
- 1. `style.leave` add and remove -> value : object [add], array [remove]
-- `enter` on DOM element is enter -> value : methods
-- `leave` on DOM element is leave -> value : methods
+- `on` → methods
+- `once` → methods
+ 1. `once.leave` → methods
+ 2. `once.class` → array | object | string
+ 3. `once.class.leave` → array | object | string
+ 4. `once.style` → array | object
+ 5. `once.style.leave` → array | object
+- `class` → array | object | string
+ 1. `class.leave` → array | object | string
+- `style` → array | object
+ 1. `style.leave` → array | object
+- `enter` → methods
+- `leave` → methods
 
 ## Vue Instance
 
