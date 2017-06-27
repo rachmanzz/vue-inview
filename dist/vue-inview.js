@@ -1,6 +1,10 @@
 'use strict'
 var inView = require('in-view')
 var shortid = require('shortid')
+/**
+  * return boolen
+    - check typeof object
+**/
 var isDefine = function (v) { return typeof v !== 'undefined' },
 isString = function (v) { return typeof v === 'string' },
 isNumber = function (v) { return typeof v === 'number' },
@@ -16,6 +20,10 @@ var hasKey = function (obj, src) {
   return result
 }
 
+/**
+  * return number
+    - counting key of object
+**/
 var objLength = function (v) {
   var result=0
   var key
@@ -24,15 +32,18 @@ var objLength = function (v) {
   }
   return result
 }
-// check if in object in array has same value
+/**
+  * return object{is → boolen, count → number}
+    - check object has defined in array
+**/
 var hasObj_Array = function (v, search, val) {
-  const defined = Object.create(null)
+  var defined = Object.create(null)
   defined.is = false
   defined.count = 0
   var length = v.length
   var i
   for (i = 0; i < length; i++) {
-    if (isDefine(v[i]) && isDefine(v[i][search])) {
+    if (isDefine(v[i][search])) {
       if (isDefine(val) && v[i][search] === val) {
         defined.is = true
         defined.count += 1
@@ -41,9 +52,15 @@ var hasObj_Array = function (v, search, val) {
   }
   return defined
 }
+
+// count* → number
 var countEntered = 0
 var countExits = 0
-// create element object
+
+/**
+  * return object{$enter → array, $exits → array, enter → string, exit → string, register → array, values → object{}}
+    - create object
+**/
 var createEl = Object.create(null)
 createEl.$enter = []
 createEl.$exits = []
@@ -51,34 +68,51 @@ createEl.enter = ''
 createEl.exit = ''
 createEl.register = []
 createEl.values = {}
-// add element enter
+
+/**
+  * (el → dom, classid → string)
+    - add element has enter
+**/
 var _element_enter = function (el, classid) {
   createEl.enter = el
   var cElm_exits = createEl.$exits.length
-  // remove element if has exits
+
+  // remove element if has in createEl.$exits
   var i
   for (i = 0;i < cElm_exits; i++) {
-    if (isDefine(createEl.$exits[i]) && isDefine(createEl.$exits[i]) && createEl.$exits[i].class === classid) {
+    if (createEl.$exits[i].class === classid) {
       createEl.$exits.splice(i,1)
     }
   }
-  // push element enter
+  // push an element
   if (!hasObj_Array(createEl.$enter,'class',classid).is) createEl.$enter.push({class:classid,el:el})
 }
-// add element exits
+
+/**
+  * (el → dom, classid → string)
+    - add element has exit
+**/
 var element_exit = function (el, classid) {
   createEl.exit = el
   var cElm_enter = createEl.$enter.length
-  // remove element if has enter
+
+  // remove element if has in createEl.$enter
   var i
   for (i = 0;i < cElm_enter; i++) {
     if (isDefine(createEl.$enter[i]) && isDefine(createEl.$enter[i].class) && createEl.$enter[i].class === classid) {
       createEl.$enter.splice(i,1)
     }
   }
-  // push element is exits
+
+  // push an element
   if (!hasObj_Array(createEl.$exits,'class',classid).is) createEl.$exits.push({class:classid,el:el} )
 }
+
+/**
+  * (rw → string)
+  * return string
+    - check and get class ID
+**/
 var obsclassreg = function (rw) {
   var result
   var rgsize = createEl.register.length
@@ -88,28 +122,44 @@ var obsclassreg = function (rw) {
   }
   return result
 }
+/**
+  * (css → string)
+  * return string
+    - create javascript stylesheet name
+**/
 var cssjs = function (css) {
   css = css.split('-')
   var result = css[0] === 'float' ? 'cssFloat' : css[0]
   var size = css.length
-  if ( size > 1 ) {
-    var i
-    for (i = 0; i < size; i++) {
-      if (i > 0) result += css[i].charAt(0).toUpperCase() + css[i].substr(1)
-    }
+  var i
+  for (i = 0; i < size; i++) {
+    if (i > 0) result += css[i].charAt(0).toUpperCase() + css[i].substr(1)
   }
   return result
 }
-// define plugin
+
+/**
+  * return object
+    - define vue-inview object
+**/
 var vue_inview = function () {}
-// inview handler
+
+/**
+  * (arg → string, classId → string, callback → function)
+    - register inView handler
+**/
 var _$eventview = function (arg, classId, callback) {
   var view = inView('.' + classId)
   arg === 'on' ? view.on('enter',callback.enter).on('exit',callback.exit) :
   arg === 'once' ? view.once('enter',callback.enter).once('exit',callback.exit) :
   console.warn('[in-view] event handler not found')
 }
-// object modifiers
+
+/**
+  * ($m → object{*})
+  * return string
+    - convert modifiers object as string
+**/
 var object_modifiers = function ($m) {
   var convert
   var key
@@ -121,7 +171,12 @@ var object_modifiers = function ($m) {
   }
   return convert
 }
-// validate argument
+
+/**
+  * (arg → string)
+  * return string
+    - check and get argument
+**/
 var $arg = function (arg) {
   var result
   switch (arg) {
@@ -148,12 +203,20 @@ var $arg = function (arg) {
   }
   return result
 }
-//default action
+
+/**
+  * (bidd → object{arg → string, modifiers → array}, callback → function)
+    - check and call callback action
+**/
 var defaultAction = function (bidd, callback) {
   if (!isDefine(bidd.arg)) callback()
   if (bidd.arg === 'on' || bidd.arg === 'once' && objLength(bidd.modifiers) === 0) callback()
 }
-// add / remove class
+
+/**
+  * (clss → string | object | array, el → dom)
+    - add and remove class of element
+**/
 var object_class = function (clss, el) {
   if (isString(clss)) el.classList.add(clss)
   if (isObject(clss)) {
@@ -171,7 +234,11 @@ var object_class = function (clss, el) {
     }
   }
 }
-// add / remove style
+
+/**
+  * (css →  object | array, el → dom)
+    - add and remove style of element
+**/
 var object_style = function (css,el) {
   var style = el.style
   if (isObject(css)) {
@@ -188,21 +255,31 @@ var object_style = function (css,el) {
     }
   }
 }
-//element inview
+
+/**
+  * (el →  dom, $bd → object{*})
+    - inview directive handler
+**/
 var _$elinview = function (el, $bd) {
+
   // generate class indetities
   var classId = shortid.generate()
   var elSize = el.classList.length
+
   // register class element
   el.classList.add(classId)
   createEl.register.push({classid: classId,rawName: $bd.rawName})
+
   // if directive value not registed
   if (!hasKey(createEl.values, classId) && isDefine($bd.value)) createEl.values[classId] = $bd.value
+
   // register handler
   var regHdlr = !isDefine($bd.arg) ? 'on' : isDefine($arg($bd.arg)) && $arg($bd.arg) === 'once' ? 'once' : isDefine($arg($bd.arg)) ?
                 'on' : 'undefined'
-  // object function on enter and exit
+
+  // create Object for handling element enter and exit
   var funcEvent = Object.create(null)
+
   // default event handler
   defaultAction($bd, function () {
     if (isDefine(createEl.values[classId]) && isFunc(createEl.values[classId])) createEl.values[classId](funcEvent)
@@ -213,10 +290,12 @@ var _$elinview = function (el, $bd) {
       var elvalue
       // check the value of the directive has been registered
       if(hasKey(createEl.values,classId)) elvalue = createEl.values[classId]
+
       // for magic properties
       countEntered += 1
       _element_enter(el, classId)
       // end magic properties
+
       if (_$arg !== 'undefined' && objLength($bd.modifiers) === 0 && isDefine(elvalue)){
           _$arg === 'class' && object_class(elvalue,el)
           _$arg === 'style' && object_style(elvalue,el)
@@ -238,12 +317,14 @@ var _$elinview = function (el, $bd) {
     },
     exit: function (el) {
       var elvalue
+
       // check the value of the directive has been registered
       if (hasKey(createEl.values,classId)) elvalue = createEl.values[classId]
       // for magic properties
       countExits += 1
       element_exit(el,classId)
       // end magic properties
+
       if (_$arg !== 'undefined' && isDefine(elvalue)) {
         if (_$arg === 'leave' && objLength($bd.modifiers)===0) isFunc(elvalue) ? elvalue(el) : console.warn('[in-view:${$bd.expression}] invalid method')
         if (objLength($bd.modifiers) > 0 && object_modifiers($bd.modifiers) === 'leave') {
@@ -251,6 +332,7 @@ var _$elinview = function (el, $bd) {
           _$arg === 'style' && object_style(elvalue,el)
         }
       }
+
       // check if has modifiers
       if (_$arg === 'on' || _$arg === 'once' && objLength($bd.modifiers)>0 && isDefine(elvalue)) {
         // register modifiers
@@ -266,7 +348,12 @@ var _$elinview = function (el, $bd) {
     }
   })
 }
+
 // define directive object
+/**
+  * return object
+    - directive object
+**/
 var _directObj = {
   inserted: function (el,$bd) {
     _$elinview(el,$bd)
@@ -282,6 +369,7 @@ var _directObj = {
     if (isDefine(getclass) && isDefine($bd.value)) createEl.values[getclass] = $bd.value
   }
 }
+
 //has attribute
 var hasAtt = function (el, att) {
   var result = false

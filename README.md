@@ -7,7 +7,10 @@
 |tested|tested|
 
 ## Releases version
-- v0.2.7 [Later version](https://github.com/rachmanzz/vue-inview)
+- v0.3.0 [Later version](https://github.com/rachmanzz/vue-inview)
+  1. fix : fix writen scripts
+  2. add new comment style
+- v0.2.7 [Later version](https://github.com/rachmanzz/vue-inview/tree/v0.2.7)
   1. fix : fix undefine rgsize
   1. fix : back to es5 for uglifyjs
   2. fix : fix writen scripts
@@ -69,10 +72,10 @@ Directive argument & modifiers
         methods:{
           methodName($v){
             // methods for on, once or without modifiers
-            $vi.enter =(el)=>{ // el = element DOM
+            $v.enter =(el)=>{ // el = element DOM
               /* logic code */
             }
-            $vi.exit =(el)=>{
+            $v.exit =(el)=>{
               /* logic code */
             }
           },
