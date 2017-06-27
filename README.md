@@ -48,7 +48,7 @@ Directive argument & modifiers
  1. `once.leave` → methods
  2. `once.class` → array | object | string
  3. `once.class.leave` → array | object | string
- 4. `once.style` → array | object 
+ 4. `once.style` → array | object
  5. `once.style.leave` → array | object
 - `class` → array | object | string
  1. `class.leave` → array | object | string
@@ -73,10 +73,10 @@ Directive argument & modifiers
           methodName($v){
             /** on and once argument only **/
             /** el → dom element **/
-            $v.enter =(el)=>{
+            $v.enter = (el) => {
               /* logic code */
             }
-            $v.exit =(el)=>{
+            $v.exit = (el) => {
               /* logic code */
             }
           },
