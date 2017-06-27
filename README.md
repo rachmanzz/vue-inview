@@ -71,8 +71,10 @@ Directive argument & modifiers
         el: '#app',
         methods:{
           methodName($v){
-            /** on and once argument only **/
-            /** el → dom element **/
+            /**
+              * on and once argument only
+                ~ el → dom element
+            **/
             $v.enter = (el) => {
               /* logic code */
             }
@@ -81,9 +83,12 @@ Directive argument & modifiers
             }
           },
           methodName2(el){
-            /** enter or leave modifiers **/
-            /** el → dom element **/
-            /* logic code */
+            /**
+              * enter or leave modifiers
+                ~ el → dom element
+
+                logic code here
+            **/
           }
         }
       })
