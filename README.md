@@ -43,12 +43,12 @@
     <div v-inview:style="{'background-color':'#eee'}"></div>
 
 Directive argument & modifiers
-- `on` → methods
-- `once` → methods
+- `on` → methods ~ on DOM element enter or leave
+- `once` → methods ~ call one time only
  1. `once.leave` → methods
  2. `once.class` → array | object | string
  3. `once.class.leave` → array | object | string
- 4. `once.style` → array | object
+ 4. `once.style` → array | object ~ remove [array] and add style {object}
  5. `once.style.leave` → array | object
 - `class` → array | object | string
  1. `class.leave` → array | object | string
@@ -59,20 +59,21 @@ Directive argument & modifiers
 
 ## Vue Instance
 
-    const v_inview = require('vueinview')
-    // or
-    import v_inview from 'vueinview'
+    const Inview = require('vueinview')
+    /** or **/
+    import Inview from 'vueinview'
 
-    Vue.use(v_inview)
+    Vue.use(Inview)
     // v_inview.offset(/* offset */)
     // v_inview.threshold(/* threshold */)
 
     new Vue({
-        el:'#app',
+        el: '#app',
         methods:{
           methodName($v){
-            // methods for on, once or without modifiers
-            $v.enter =(el)=>{ // el = element DOM
+            /** on and once argument only **/
+            /** el → dom element **/
+            $v.enter =(el)=>{
               /* logic code */
             }
             $v.exit =(el)=>{
@@ -80,7 +81,8 @@ Directive argument & modifiers
             }
           },
           methodName2(el){
-            // for enter or leave argument
+            /** enter or leave modifiers **/
+            /** el → dom element **/
             /* logic code */
           }
         }
@@ -88,9 +90,9 @@ Directive argument & modifiers
 
 ### class & style
   - class
-    1. object : `{'classname':true}` add class if true, remove class if false
+    1. object : `{'classname': true}` add class if true, remove class if false
     2. string : `'classname'` add single class
-    3. array : `['classname','classname2']` add many class
+    3. array : `['classname', 'classname2']` add many class
   - style
     1. object : `{'background-color': '#eee', 'color':'#000'}` add style
     2. array : `['background-color']` remove style
@@ -110,24 +112,22 @@ Directive argument & modifiers
           el : '#app',
           mounted(){
             // magic properties
-            this._$inview('#viewMe',{
-                enter:(el)=>{
+            this._$inview('#viewMe', {
+                enter: (el) => {
                   el.style.backgroundColor = "#D93600";
-                  console.log("is enter name")
+                  console.log("DOM element entered")
                 },
 
-
-                exit:(el)=>{
+                exit: (el) => {
                   el.style.backgroundColor = "#000";
-                  console.log("is exit name")
+                  console.log("DOM element leave")
                 }
               })
-
-
           }
         }
       )
 
-#credit
+
+##credit
 - this vue-inview base on https://github.com/camwiegert/in-view
 - shortid module https://github.com/dylang/shortid
