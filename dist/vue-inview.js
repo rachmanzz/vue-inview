@@ -11,6 +11,10 @@ isNumber = function (v) { return typeof v === 'number' },
 isFunc   = function (v) { return typeof v === 'function' },
 isArray  = function (v) { return Array.isArray(v) },
 isObject = function (v) { return !isArray(v) && typeof v === 'object' }
+/**
+  * return boolen
+    - check if key has in object
+**/
 var hasKey = function (obj, src) {
   var result = false
   var key
@@ -25,7 +29,7 @@ var hasKey = function (obj, src) {
     - counting key of object
 **/
 var objLength = function (v) {
-  var result=0
+  var result = 0
   var key
   for (key in v) {
       v.hasOwnProperty(key) && result++
@@ -85,7 +89,7 @@ var _element_enter = function (el, classid) {
     }
   }
   // push an element
-  if (!hasObj_Array(createEl.$enter,'class',classid).is) createEl.$enter.push({class:classid,el:el})
+  if (!hasObj_Array(createEl.$enter, 'class', classid).is) createEl.$enter.push({class: classid, el: el})
 }
 
 /**
@@ -105,7 +109,7 @@ var element_exit = function (el, classid) {
   }
 
   // push an element
-  if (!hasObj_Array(createEl.$exits,'class',classid).is) createEl.$exits.push({class:classid,el:el} )
+  if (!hasObj_Array(createEl.$exits, 'class', classid).is) createEl.$exits.push({class: classid, el: el})
 }
 
 /**
@@ -150,8 +154,8 @@ var vue_inview = function () {}
 **/
 var _$eventview = function (arg, classId, callback) {
   var view = inView('.' + classId)
-  arg === 'on' ? view.on('enter',callback.enter).on('exit',callback.exit) :
-  arg === 'once' ? view.once('enter',callback.enter).once('exit',callback.exit) :
+  arg === 'on' ? view.on('enter', callback.enter).on('exit', callback.exit) :
+  arg === 'once' ? view.once('enter', callback.enter).once('exit', callback.exit) :
   console.warn('[in-view] event handler not found')
 }
 
@@ -223,8 +227,8 @@ var object_class = function (clss, el) {
     var classArr = el.className.split(' ')
     var key
     for (key in clss) {
-      if (classArr.indexOf(key) && clss[key]===false) el.classList.remove(key)
-      if (clss.hasOwnProperty(key) && clss[key]===true) el.classList.add(key)
+      if (classArr.indexOf(key) && clss[key] === false) el.classList.remove(key)
+      if (clss.hasOwnProperty(key) && clss[key] === true) el.classList.add(key)
     }
   }
   if (isArray(clss)) {
@@ -239,7 +243,7 @@ var object_class = function (clss, el) {
   * (css →  object | array, el → dom)
     - add and remove style of element
 **/
-var object_style = function (css,el) {
+var object_style = function (css, el) {
   var style = el.style
   if (isObject(css)) {
     var key
