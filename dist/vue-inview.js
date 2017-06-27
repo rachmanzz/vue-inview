@@ -354,7 +354,7 @@ var _$elinview = function (el, $bd) {
 }
 
 /**
-  * return object
+  * return object{ inserted → function(*), componentUpdated: function(*) }
     - directive object
 **/
 var _directObj = {
@@ -373,7 +373,11 @@ var _directObj = {
   }
 }
 
-//has attribute
+/**
+  * (el → dom, att → string)
+  * return boolen
+    - check if has attribute
+**/
 var hasAtt = function (el, att) {
   var result = false
   if (/^\.[\w]+/.test(att)) {
@@ -402,7 +406,10 @@ var hasAtt = function (el, att) {
   return result
 }
 
-//setTimeout
+/**
+  * (update → function)
+    - life cycle update
+**/
 var updateLifeCycle = function (update) {
   var sync = function () {
     update()
@@ -410,14 +417,18 @@ var updateLifeCycle = function (update) {
   }
   sync()
 }
-// define methods inview
+
+/**
+  * ($arg → string, $opt → object{ * })
+    - check and send notification if component has enter or exit
+**/
 var _$inview = function ($arg, $opt) {
   var lastEnter = 0
   var lastExit = 0
   updateLifeCycle(function () {
     if (isDefine($opt) && isObject($opt) && isString($arg)) {
       if (countEntered > lastEnter) {
-        isDefine($opt.enter) && hasAtt(createEl.enter,$arg) && $opt.enter(createEl.enter)
+        isDefine($opt.enter) && hasAtt(createEl.enter, $arg) && $opt.enter(createEl.enter)
         lastEnter = countEntered
       }
       if (countExits > lastExit) {
@@ -427,24 +438,37 @@ var _$inview = function ($arg, $opt) {
     }
   })
 }
-// define directive
+
+/**
+  * ($vm → vue Object)
+    - set directive
+**/
 var _directive = function ($vm) {
   $vm.directive('inview', _directObj)
 }
-// define methods
+
+/**
+  * ($vm → vue Object)
+    - set prototype
+**/
 var _$methods = function ($vm) {
   $vm.prototype._$inview = _$inview
 }
+
 var _install = function (Vue, Option) {
   if (isDefine(Option) && isObject(Option)) inView.offset(Option)
   _directive(Vue)
   _$methods(Vue)
 }
+
 vue_inview.install = _install
+
 vue_inview.threshold = function (c) {
   inView.threshold(c)
 }
+
 vue_inview.offset = function (c) {
   inView.offset(c)
 }
+
 module.exports = vue_inview
