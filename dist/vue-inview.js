@@ -83,11 +83,15 @@ var _element_enter = function (el, classid) {
 
   // remove element if has in createEl.$exits
   var i
-  for (i = 0;i < cElm_exits; i++) {
-    if (createEl.$exits[i].class === classid) {
-      createEl.$exits.splice(i,1)
+  if (cElm_exits > 0) {
+    for (i = 0;i < cElm_exits; i++) {
+      // make sure that element is exits
+      if (isDefine(createEl.$exits[i]) && isDefine(createEl.$exits[i].class) && createEl.$exits[i].class === classid) {
+        createEl.$exits.splice(i,1)
+      }
     }
   }
+  
   // push an element
   if (!hasObj_Array(createEl.$enter, 'class', classid).is) createEl.$enter.push({class: classid, el: el})
 }
@@ -102,9 +106,11 @@ var element_exit = function (el, classid) {
 
   // remove element if has in createEl.$enter
   var i
-  for (i = 0;i < cElm_enter; i++) {
-    if (isDefine(createEl.$enter[i]) && isDefine(createEl.$enter[i].class) && createEl.$enter[i].class === classid) {
-      createEl.$enter.splice(i,1)
+  if (cElm_enter > 0) {
+    for (i = 0;i < cElm_enter; i++) {
+      if (isDefine(createEl.$enter[i]) && isDefine(createEl.$enter[i].class) && createEl.$enter[i].class === classid) {
+        createEl.$enter.splice(i,1)
+      }
     }
   }
 
