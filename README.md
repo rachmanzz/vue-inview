@@ -1,4 +1,4 @@
-# vue-inview (beta)
+# vue-inview
 
 ## Tested
 
@@ -7,23 +7,11 @@
 |tested|tested|
 
 ## Releases version
-- v0.3.0 [Later version](https://github.com/rachmanzz/vue-inview)
+- v1.0.1 [version 1.0.1]
+  1. fix : undefined class
+- v0.3.0 [version 0.3.0]
   1. fix : fix writen scripts
   2. add new comment style
-- v0.2.7 [Later version](https://github.com/rachmanzz/vue-inview/tree/v0.2.7)
-  1. fix : fix undefine rgsize
-  1. fix : back to es5 for uglifyjs
-  2. fix : fix writen scripts
-- v0.2.3 [version 0.2.3](https://github.com/rachmanzz/vue-inview/tree/v0.2.3)
-  1. fix : current event
-- v0.2.2 [version 0.2.2](https://github.com/rachmanzz/vue-inview/tree/v0.2.2)
-  1. fix: bugs modifiers leave
-- v0.2.1
-  1. eliminate some modifiers
-  2. add style argument & modifiers
-  3. on element updated in-view
-- v0.1.5 [version 0.1.5](https://github.com/rachmanzz/vue-inview/tree/v0.1.5)
-  1. bugs fix const & let global variable
 
 
 ## Install
