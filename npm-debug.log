@@ -1,0 +1,108 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/usr/local/bin/node', '/usr/local/bin/npm', 'publish' ]
+2 info using npm@3.10.10
+3 info using node@v6.10.0
+4 verbose publish [ '.' ]
+5 silly cache add args [ '.', null ]
+6 verbose cache add spec .
+7 silly cache add parsed spec Result {
+7 silly cache add   raw: '.',
+7 silly cache add   scope: null,
+7 silly cache add   escapedName: null,
+7 silly cache add   name: null,
+7 silly cache add   rawSpec: '.',
+7 silly cache add   spec: '/home/rahman/project/vueinview',
+7 silly cache add   type: 'directory' }
+8 verbose addLocalDirectory /home/rahman/.npm/vueinview/0.3.0/package.tgz not in flight; packing
+9 verbose correctMkdir /home/rahman/.npm correctMkdir not in flight; initializing
+10 info lifecycle vueinview@0.3.0~prepublish: vueinview@0.3.0
+11 silly lifecycle vueinview@0.3.0~prepublish: no script for prepublish, continuing
+12 verbose tar pack [ '/home/rahman/.npm/vueinview/0.3.0/package.tgz',
+12 verbose tar pack   '/home/rahman/project/vueinview' ]
+13 verbose tarball /home/rahman/.npm/vueinview/0.3.0/package.tgz
+14 verbose folder /home/rahman/project/vueinview
+15 verbose addLocalTarball adding from inside cache /home/rahman/.npm/vueinview/0.3.0/package.tgz
+16 verbose correctMkdir /home/rahman/.npm correctMkdir not in flight; initializing
+17 silly cache afterAdd vueinview@0.3.0
+18 verbose afterAdd /home/rahman/.npm/vueinview/0.3.0/package/package.json not in flight; writing
+19 verbose correctMkdir /home/rahman/.npm correctMkdir not in flight; initializing
+20 verbose afterAdd /home/rahman/.npm/vueinview/0.3.0/package/package.json written
+21 silly publish { name: 'vueinview',
+21 silly publish   version: '0.3.0',
+21 silly publish   description: 'vue in-view',
+21 silly publish   main: './dist/vue-inview.js',
+21 silly publish   scripts: { test: 'echo "Error: no test specified" && exit 1' },
+21 silly publish   dependencies: { 'in-view': '^0.6.1', shortid: '^2.2.6' },
+21 silly publish   repository:
+21 silly publish    { type: 'git',
+21 silly publish      url: 'git+https://github.com/rachmanzz/vue-inview.git' },
+21 silly publish   keywords: [ 'javascript', 'inview', 'plugin', 'vue' ],
+21 silly publish   author: { name: 'Muhammad Abdurrahman' },
+21 silly publish   license: 'MIT',
+21 silly publish   bugs: { url: 'https://github.com/rachmanzz/vue-inview/issues' },
+21 silly publish   homepage: 'https://github.com/rachmanzz/vue-inview#readme',
+21 silly publish   readme: '# vue-inview\n\n## Tested\n\n|chrome|firefox|\n|------|-------|\n|tested|tested|\n\n## Releases version\n- v1.0.1 [version 1.0.1]\n  1. fix : undefined class\n- v0.3.0 [version 0.3.0]\n  1. fix : fix writen scripts\n  2. add new comment style\n\n\n## Install\n\n    npm install --save vueinview\n    or later version\n    npm install --save rachmanzz/vue-inview\n\n\n## Usage\n### Vue Directive\n\n    <element v-inview:on="methods"></element>\n    <div v-inview:enter="methods"></div>\n    <div v-inview:class="[\'className\']"></div>\n    <div v-inview:class="{\'page\':true}"></div>\n    <div v-inview:style="{\'background-color\':\'#eee\'}"></div>\n\nDirective argument & modifiers\n- `on` → methods ~ on DOM element enter or leave\n- `once` → methods ~ call one time only\n 1. `once.leave` → methods\n 2. `once.class` → array | object | string\n 3. `once.class.leave` → array | object | string\n 4. `once.style` → array | object\n 5. `once.style.leave` → array | object\n- `class` → array | object | string\n 1. `class.leave` → array | object | string\n- `style` → array | object\n 1. `style.leave` → array | object\n- `enter` → methods\n- `leave` → methods\n\n## Vue Instance\n\n    const Inview = require(\'vueinview\')\n    /** or **/\n    import Inview from \'vueinview\'\n\n    Vue.use(Inview)\n    // v_inview.offset(/* offset */)\n    // v_inview.threshold(/* threshold */)\n\n    new Vue({\n        el: \'#app\',\n        methods:{\n          methodName($v){\n            /**\n              * on and once argument only\n                ~ el → dom element\n            **/\n            $v.enter = (el) => {\n              /* logic code */\n            }\n            $v.exit = (el) => {\n              /* logic code */\n            }\n          },\n          methodName2(el){\n            /**\n              * enter or leave modifiers\n                ~ el → dom element\n\n                logic code here\n            **/\n          }\n        }\n      })\n\n### class & style\n  - class\n    1. object : `{\'classname\': true}` add class if true, remove class if false\n    2. string : `\'classname\'` add single class\n    3. array : `[\'classname\', \'classname2\']` add many class\n  - style\n    1. object : `{\'background-color\': \'#eee\', \'color\':\'#000\'}` add style\n    2. array : `[\'background-color\']` remove style\n\n\n\n# Other Way\n### Magic properties    \n### set Vue Directive\n\n    <div id="viewMe" v-inview>text or other element</div>\n\n## Vue Instance\n\n    new Vue(\n        {\n          el : \'#app\',\n          mounted(){\n            // magic properties\n            this._$inview(\'#viewMe\', {\n                enter: (el) => {\n                  el.style.backgroundColor = "#D93600";\n                  console.log("DOM element entered")\n                },\n\n                exit: (el) => {\n                  el.style.backgroundColor = "#000";\n                  console.log("DOM element leave")\n                }\n              })\n          }\n        }\n      )\n\n\n\n## Credit\n- this vue-inview base on https://github.com/camwiegert/in-view\n- shortid module https://github.com/dylang/shortid\n',
+21 silly publish   readmeFilename: 'README.md',
+21 silly publish   gitHead: '6713ed04a9a64b6e07a5472447b63507e035efb9',
+21 silly publish   _id: 'vueinview@0.3.0',
+21 silly publish   _shasum: '225dc8434e7b2d449b8d282875e440f08b606d04',
+21 silly publish   _from: '.' }
+22 verbose getPublishConfig undefined
+23 silly mapToRegistry name vueinview
+24 silly mapToRegistry using default registry
+25 silly mapToRegistry registry https://registry.npmjs.org/
+26 silly mapToRegistry data Result {
+26 silly mapToRegistry   raw: 'vueinview',
+26 silly mapToRegistry   scope: null,
+26 silly mapToRegistry   escapedName: 'vueinview',
+26 silly mapToRegistry   name: 'vueinview',
+26 silly mapToRegistry   rawSpec: '',
+26 silly mapToRegistry   spec: 'latest',
+26 silly mapToRegistry   type: 'tag' }
+27 silly mapToRegistry uri https://registry.npmjs.org/vueinview
+28 verbose publish registryBase https://registry.npmjs.org/
+29 silly publish uploading /home/rahman/.npm/vueinview/0.3.0/package.tgz
+30 verbose request uri https://registry.npmjs.org/vueinview
+31 verbose request sending authorization for write operation
+32 info attempt registry request try #1 at 12:39:02 PM
+33 verbose request using bearer token for auth
+34 verbose request id ee5d73a50236e66f
+35 http request PUT https://registry.npmjs.org/vueinview
+36 http 403 https://registry.npmjs.org/vueinview
+37 verbose headers { 'content-type': 'application/json',
+37 verbose headers   'cache-control': 'max-age=300',
+37 verbose headers   'content-length': '95',
+37 verbose headers   'accept-ranges': 'bytes',
+37 verbose headers   date: 'Wed, 09 Aug 2017 04:39:04 GMT',
+37 verbose headers   via: '1.1 varnish',
+37 verbose headers   connection: 'keep-alive',
+37 verbose headers   'x-served-by': 'cache-sin18021-SIN',
+37 verbose headers   'x-cache': 'MISS',
+37 verbose headers   'x-cache-hits': '0',
+37 verbose headers   'x-timer': 'S1502253544.810759,VS0,VE988',
+37 verbose headers   vary: 'Accept-Encoding, Accept' }
+38 verbose request invalidating /home/rahman/.npm/registry.npmjs.org/vueinview on PUT
+39 error publish Failed PUT 403
+40 verbose stack Error: "You cannot publish over the previously published version 0.3.0." : vueinview
+40 verbose stack     at makeError (/usr/local/lib/node_modules/npm/node_modules/npm-registry-client/lib/request.js:302:12)
+40 verbose stack     at CachingRegistryClient.<anonymous> (/usr/local/lib/node_modules/npm/node_modules/npm-registry-client/lib/request.js:290:14)
+40 verbose stack     at Request._callback (/usr/local/lib/node_modules/npm/node_modules/npm-registry-client/lib/request.js:210:14)
+40 verbose stack     at Request.self.callback (/usr/local/lib/node_modules/npm/node_modules/request/request.js:187:22)
+40 verbose stack     at emitTwo (events.js:106:13)
+40 verbose stack     at Request.emit (events.js:191:7)
+40 verbose stack     at Request.<anonymous> (/usr/local/lib/node_modules/npm/node_modules/request/request.js:1048:10)
+40 verbose stack     at emitOne (events.js:96:13)
+40 verbose stack     at Request.emit (events.js:188:7)
+40 verbose stack     at IncomingMessage.<anonymous> (/usr/local/lib/node_modules/npm/node_modules/request/request.js:969:12)
+41 verbose statusCode 403
+42 verbose pkgid vueinview
+43 verbose cwd /home/rahman/project/vueinview
+44 error Linux 4.4.0-89-generic
+45 error argv "/usr/local/bin/node" "/usr/local/bin/npm" "publish"
+46 error node v6.10.0
+47 error npm  v3.10.10
+48 error code E403
+49 error "You cannot publish over the previously published version 0.3.0." : vueinview
+50 error If you need help, you may report this error at:
+50 error     <https://github.com/npm/npm/issues>
+51 verbose exit [ 1, true ]
