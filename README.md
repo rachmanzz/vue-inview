@@ -16,7 +16,7 @@
 - v1.0.2 
   1. animate.css combine
   2. toggle modifier
-  3. fix improve writing script
+  3. improve writing script
 
 ## Install
 
