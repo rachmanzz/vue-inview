@@ -222,8 +222,11 @@ var $arg = function (arg) {
     case 'leave':
       result = arg
       break
+    case 'animate':
+      result = arg
+      break  
     default:
-      console.warn('[in-view] argument ${arg} undefined')
+      console.warn('[in-view] argument {{$arg}} undefined')
   }
   return result
 }
