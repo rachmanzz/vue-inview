@@ -37,6 +37,20 @@ var objLength = function (v) {
   return result
 }
 /**
+  * return number
+    - check element class
+**/
+var hasClass = function (el, check) {
+  var cls = el.classList
+  var size = cls.length
+  var result = false
+  var i = 0
+  for (i; i < size; i++) {
+    if (cls[i].toString() === check) result = true
+  }
+  return result
+}
+/**
   * return object{is → boolen, count → number}
     - check object has defined in array
 **/
@@ -266,6 +280,123 @@ var object_style = function (css, el) {
   }
 }
 
+var animateClass = [
+  'bounce', 'flash', 'pulse', 'rubberBand', 'shake', 'headShake', 'swing', 'tada',
+  'wobble', 'jello', 'bounceIn', 'bounceInDown', 'bounceInLeft', 'bounceInRight',
+  'bounceInUp', 'bounceOut', 'bounceOutDown', 'bounceOutLeft', 'bounceOutRight',
+  'bounceOutUp', 'fadeIn', 'fadeInDown', 'fadeInDownBig', 'fadeInLeft', 'fadeInLeftBig',
+  'fadeInRight', 'fadeInRightBig', 'fadeInUp', 'fadeInUpBig', 'fadeOut', 'fadeOutDown',
+  'fadeOutDownBig', 'fadeOutLeft', 'fadeOutLeftBig', 'fadeOutRight', 'fadeOutRightBig',
+  'fadeOutUp', 'fadeOutUpBig', 'flipInX', 'flipInY', 'flipOutX', 'flipOutY', 'lightSpeedIn',
+  'lightSpeedOut', 'rotateIn', 'rotateInDownLeft', 'rotateInDownRight', 'rotateInUpLeft', 'rotateInUpRight',
+  'rotateOut', 'rotateOutDownLeft', 'rotateOutDownRight', 'rotateOutUpLeft', 'rotateOutUpRight',
+  'hinge', 'jackInTheBox', 'rollIn', 'rollOut', 'zoomIn', 'zoomInDown', 'zoomInLeft', 'zoomInRight',
+  'zoomInUp', 'zoomOut', 'zoomOutDown', 'zoomOutLeft', 'zoomOutRight', 'zoomOutUp', 'slideInDown', 'slideInLeft',
+  'slideInRight', 'slideInUp', 'slideOutDown', 'slideOutLeft', 'slideOutRight', 'slideOutUp'
+]
+var animate_inverse = function (data) {
+  var inverse = [
+    ['In', 'Out'],
+    ['X', 'Y'],
+    ['Down', 'Up'],
+    ['Left', 'Right']
+  ]
+  var i = 0
+  var size = inverse.length
+  var result
+  for (i; i < size; i++) {
+    var index = inverse[i]
+    if (index.indexOf(data) >= 0) {
+      var colm = index.indexOf(data)
+      result = colm === 0 ? index[1] : index[0]
+    }
+  }
+  return result
+}
+var animate_direction = function (an, type) {
+  var data = an
+  var animate
+  var result
+  
+  if (/^[a-z]+[A-Z][a-z]+$/.test(data)) {
+    animate = data.match(/^([a-z]+)([A-Z][a-z]+)$/)
+    if (type === 'toggle' && isDefine(animate_inverse(animate[2]))) {
+      result = animate[1] + animate_inverse(animate[2])
+    }
+  }
+  if (/^[a-z]+[A-Z][a-z]+[A-Z]$/.test(data)) {
+    animate = data.match(/^([a-z]+)([A-Z][a-z]+)([A-Z])$/)
+    if (type === 'toggle' && isDefine(animate_inverse(animate[2]))) {
+      result = animate[1] + animate_inverse(animate[2])  + animate[3]
+    }
+    if (type === 'toggle.inverse' && isDefine(animate_inverse(animate[2]))) {
+      result = animate[1] + animate_inverse(animate[2])  + (isDefine(animate_inverse(animate[3])) ? animate_inverse(animate[3]) : animate[3])
+    }
+  }
+  if (/^[a-z]+[A-Z][a-z]+[A-Z][a-z]+$/.test(data)) {
+    animate = data.match(/^([a-z]+)([A-Z][a-z]+)([A-Z][a-z]+)$/)
+    if (type === 'toggle' && isDefine(animate_inverse(animate[2]))) {
+      result = animate[1] + animate_inverse(animate[2])  + animate[3]
+    }
+    if (type === 'toggle.inverse' && isDefine(animate_inverse(animate[2]))) {
+      result = animate[1] + animate_inverse(animate[2])  + (isDefine(animate_inverse(animate[3])) ? animate_inverse(animate[3]) : animate[3])
+    }
+  }
+  if (/^[a-z]+[A-Z][a-z]+[A-Z][a-z]+[A-Z][a-z]+$/.test(data)) {
+    animate = data.match(/^([a-z]+)([A-Z][a-z]+)([A-Z][a-z]+)([A-Z][a-z]+)$/)
+    if (type === 'toggle' && isDefine(animate_inverse(animate[2]))) {
+      result = animate[1] + animate_inverse(animate[2])  + animate[3]
+    }
+    if (type === 'toggle.inverse' && isDefine(animate_inverse(animate[2]))) {
+      result = animate[1] + animate_inverse(animate[2])  + (isDefine(animate_inverse(animate[3])) ? animate_inverse(animate[3]) : animate[3]) + 
+      (isDefine(animate_inverse(animate[4])) ? animate_inverse(animate[4]) : animate[4])
+    }
+  }
+  return result
+}
+
+var object_animation = function (cls, el, mdf) {
+  if (isString(cls)) {
+    if (isDefine(mdf) && hasClass(el, cls) && mdf !== 'infinite') {
+      var rmClass = {}
+      rmClass[cls] = false
+      object_class(rmClass, el)
+      if (isDefine(animate_direction(cls,mdf)) && animateClass.indexOf(animate_direction(cls, mdf)) >= 0){
+        object_class(animate_direction(cls,mdf), el)
+      }
+    } else {
+      if (hasClass(el, cls)) {
+        var rmClass = {}
+        rmClass[cls] = false
+        object_class(rmClass, el)
+      }
+      var animate = !hasClass(el, 'animated') ? ['animated', cls] : cls
+      object_class(animate, el)
+    }
+  }
+  if (isArray(cls)) {
+    var i = 0
+    var size = cls.length
+    var iClass
+    var animate
+    for (i; i < size; i++) {
+      if (hasClass(el, cls[i])) {
+        var rmClass = {}
+        rmClass[cls] = false
+        iClass = i
+        object_class(rmClass, el)
+      }
+    }
+    if (isDefine(mdf) && mdf === 'toggle') {
+      var getClass = !isDefine(iClass) && size > 0 ? cls[0] : (iClass + 1) > size ? cls[(iClass + 1)] : cls[0]
+      animate = !hasClass(el, 'animated') ? ['animated', getClass] : getClass
+    } else {
+      animate = !hasClass(el, 'animated') ? cls.push('animated') : cls
+    }
+    object_class(animate, el)
+  }
+}
+
 /**
   * (el →  dom, $bd → object{*})
     - inview directive handler
@@ -309,7 +440,14 @@ var _$elinview = function (el, $bd) {
       if (_$arg !== 'undefined' && objLength($bd.modifiers) === 0 && isDefine(elvalue)){
           _$arg === 'class' && object_class(elvalue,el)
           _$arg === 'style' && object_style(elvalue,el)
+          _$arg === 'animate' && object_animation(elvalue,el)
           if (_$arg === 'enter') isFunc(elvalue) ? elvalue(el) : console.warn('[in-view:${$bd.expression}] invalid method')
+      }
+
+      if (_$arg !== 'undefined' && _$arg === 'animate' && objLength($bd.modifiers) > 0 && isDefine(elvalue)){
+        // register modifiers
+        var $mdf = object_modifiers($bd.modifiers)
+        if ($mdf === 'toggle' || $mdf === 'toggle.inverse' || $mdf === 'toggle.infinite') object_animation(elvalue,el, $mdf)
       }
       
       if (_$arg === 'on' || _$arg === 'once' && objLength($bd.modifiers) > 0 && isDefine(elvalue)){
@@ -321,6 +459,8 @@ var _$elinview = function (el, $bd) {
         $mdf === 'class' && object_class(elvalue,el)
         // modifiers style
         $mdf === 'style' && object_style(elvalue,el)
+        // modifiers animate
+        $mdf === 'animate' && object_animation(elvalue,el)
       }
 
       isDefine(funcEvent.enter) && funcEvent.enter(el)
@@ -340,6 +480,12 @@ var _$elinview = function (el, $bd) {
         if (objLength($bd.modifiers) > 0 && object_modifiers($bd.modifiers) === 'leave') {
           _$arg === 'class' && object_class(elvalue,el)
           _$arg === 'style' && object_style(elvalue,el)
+          _$arg === 'animate' && object_animation(elvalue,el)
+        }
+        if (_$arg === 'animate' && objLength($bd.modifiers) > 0 && isDefine(elvalue)){
+          // register modifiers
+          var $mdf = object_modifiers($bd.modifiers)
+          if ($mdf === 'toggle' || $mdf === 'toggle.inverse' || $mdf === 'toggle.infinite') object_animation(elvalue,el, $mdf)
         }
       }
 
@@ -353,6 +499,8 @@ var _$elinview = function (el, $bd) {
         $mdf === 'class.leave' && object_class(elvalue,el)
         // leave : style modifiers
         $mdf === 'style.leave' && object_style(elvalue,el)
+        // leave : animate modifiers
+        _$arg === 'animate' && object_animation(elvalue,el)
       }
       isDefine(funcEvent.exit) && funcEvent.exit(el)
     }
