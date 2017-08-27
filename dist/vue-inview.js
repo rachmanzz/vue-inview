@@ -368,6 +368,11 @@ var object_animation = function (cls, el, mdf) {
         object_class(animate_direction(cls,mdf), el)
       }
     } else {
+      if (isDefine(mdf) && hasClass(el, animate_direction(cls,mdf))) {
+        var rmClass = {}
+        rmClass[animate_direction(cls,mdf)] = false
+        object_class(rmClass, el)
+      }
       if (hasClass(el, cls)) {
         var rmClass = {}
         rmClass[cls] = false
