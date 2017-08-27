@@ -311,7 +311,7 @@ var _$elinview = function (el, $bd) {
           _$arg === 'style' && object_style(elvalue,el)
           if (_$arg === 'enter') isFunc(elvalue) ? elvalue(el) : console.warn('[in-view:${$bd.expression}] invalid method')
       }
-
+      
       if (_$arg === 'on' || _$arg === 'once' && objLength($bd.modifiers) > 0 && isDefine(elvalue)){
         // register modifiers
         var $mdf = object_modifiers($bd.modifiers)

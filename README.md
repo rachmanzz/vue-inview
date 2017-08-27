@@ -12,7 +12,11 @@
 - v0.3.0 [version 0.3.0]
   1. fix : fix writen scripts
   2. add new comment style
-
+## Coming soon
+- v1.0.2 
+  1. animate.css combine
+  2. toggle modifier
+  3. fix improve writing script
 
 ## Install
 
