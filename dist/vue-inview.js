@@ -390,6 +390,7 @@ var object_animation = function (cls, el, mdf) {
     var iClass
     var animate
     for (i; i < size; i++) {
+      console.log(rmClass)
       if (hasClass(el, cls[i])) {
         var rmClass = {}
         rmClass[cls[i]] = false
