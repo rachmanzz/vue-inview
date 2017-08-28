@@ -391,7 +391,6 @@ var object_animation = function (cls, el, mdf) {
     var animate
     console.log('check if defined')
     for (i; i < size; i++) {
-      console.log(rmClass)
       if (hasClass(el, cls[i])) {
         var rmClass = {}
         rmClass[cls[i]] = false
@@ -402,6 +401,7 @@ var object_animation = function (cls, el, mdf) {
     }
     if (isDefine(mdf) && mdf === 'toggle') {
       var getClass = !isDefine(iClass) && size >= 0 ? cls[0] : (iClass + 1) < size ? cls[(iClass + 1)] : cls[0]
+      console.log(getClass)
       animate = !hasClass(el, 'animated') ? ['animated', getClass] : getClass
     } else {
       animate = !hasClass(el, 'animated') ? cls.push('animated') : cls
