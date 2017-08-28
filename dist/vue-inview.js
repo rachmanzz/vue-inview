@@ -394,6 +394,7 @@ var object_animation = function (cls, el, mdf) {
         var rmClass = {}
         rmClass[cls[i]] = false
         iClass = i
+        console.log(rmClass)
         object_class(rmClass, el)
       }
     }
