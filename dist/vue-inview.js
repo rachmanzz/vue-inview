@@ -364,11 +364,13 @@ var object_animation = function (cls, el, mdf) {
       var rmClass = {}
       rmClass[cls] = false
       object_class(rmClass, el)
-      if (isDefine(animate_direction(cls,mdf)) && animateClass.indexOf(animate_direction(cls, mdf)) >= 0){
-        object_class(animate_direction(cls,mdf), el)
+      var inverseAnim = animate_direction(cls, mdf)
+      if (isDefine(inverseAnim) && animateClass.indexOf(inverseAnim) >= 0){
+        object_class(inverseAnim, el)
       }
     } else {
-      if (isDefine(mdf) && hasClass(el, animate_direction(cls,mdf))) {
+      var inverseAnim = animate_direction(cls, mdf)
+      if (isDefine(mdf) && isDefine(inverseAnim) && hasClass(el, inverseAnim)) {
         var rmClass = {}
         rmClass[animate_direction(cls,mdf)] = false
         object_class(rmClass, el)
@@ -396,7 +398,7 @@ var object_animation = function (cls, el, mdf) {
       }
     }
     if (isDefine(mdf) && mdf === 'toggle') {
-      var getClass = !isDefine(iClass) && size > 0 ? cls[0] : (iClass + 1) > size ? cls[(iClass + 1)] : cls[0]
+      var getClass = !isDefine(iClass) && size >= 0 ? cls[0] : (iClass + 1) < size ? cls[(iClass + 1)] : cls[0]
       animate = !hasClass(el, 'animated') ? ['animated', getClass] : getClass
     } else {
       animate = !hasClass(el, 'animated') ? cls.push('animated') : cls
