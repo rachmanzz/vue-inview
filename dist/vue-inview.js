@@ -372,7 +372,7 @@ var object_animation = function (cls, el, mdf) {
       var inverseAnim = animate_direction(cls, mdf)
       if (isDefine(mdf) && isDefine(inverseAnim) && hasClass(el, inverseAnim)) {
         var rmClass = {}
-        rmClass[animate_direction(cls,mdf)] = false
+        rmClass[inverseAnim] = false
         object_class(rmClass, el)
       }
       if (hasClass(el, cls)) {
@@ -392,7 +392,7 @@ var object_animation = function (cls, el, mdf) {
     for (i; i < size; i++) {
       if (hasClass(el, cls[i])) {
         var rmClass = {}
-        rmClass[cls] = false
+        rmClass[cls[1]] = false
         iClass = i
         object_class(rmClass, el)
       }
@@ -457,7 +457,7 @@ var _$elinview = function (el, $bd) {
       if (_$arg !== 'undefined' && _$arg === 'animate' && objLength($bd.modifiers) > 0 && isDefine(elvalue)){
         // register modifiers
         var $mdf = object_modifiers($bd.modifiers)
-        if ($mdf === 'toggle' || $mdf === 'toggle.inverse' || $mdf === 'toggle.infinite') object_animation(elvalue,el, $mdf)
+        if ($mdf === 'toggle' || $mdf === 'toggle.inverse') object_animation(elvalue, el, $mdf)
       }
       
       if (_$arg === 'on' || _$arg === 'once' && objLength($bd.modifiers) > 0 && isDefine(elvalue)){
@@ -466,11 +466,11 @@ var _$elinview = function (el, $bd) {
         // modifiers enter
         if ($mdf === 'enter') isFunc(elvalue) ? elvalue(el) : console.warn('[in-view:${$bd.expression}] invalid method')
         // modifiers class
-        $mdf === 'class' && object_class(elvalue,el)
+        $mdf === 'class' && object_class(elvalue, el)
         // modifiers style
-        $mdf === 'style' && object_style(elvalue,el)
+        $mdf === 'style' && object_style(elvalue, el)
         // modifiers animate
-        $mdf === 'animate' && object_animation(elvalue,el)
+        $mdf === 'animate' && object_animation(elvalue, el)
       }
 
       isDefine(funcEvent.enter) && funcEvent.enter(el)
