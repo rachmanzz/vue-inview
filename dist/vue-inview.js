@@ -389,6 +389,7 @@ var object_animation = function (cls, el, mdf) {
     var size = cls.length
     var iClass
     var animate
+    console.log('check if defined')
     for (i; i < size; i++) {
       console.log(rmClass)
       if (hasClass(el, cls[i])) {
