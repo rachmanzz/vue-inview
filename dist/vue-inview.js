@@ -392,7 +392,7 @@ var object_animation = function (cls, el, mdf) {
     for (i; i < size; i++) {
       if (hasClass(el, cls[i])) {
         var rmClass = {}
-        rmClass[cls[1]] = false
+        rmClass[cls[i]] = false
         iClass = i
         object_class(rmClass, el)
       }
