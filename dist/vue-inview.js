@@ -224,9 +224,12 @@ var $arg = function (arg) {
       break
     case 'animate':
       result = arg
+      break
+    case 'parent':
+      result = arg
       break  
     default:
-      console.warn('[in-view] argument {{$arg}} undefined')
+      console.warn(`[in-view] argument ${arg} undefined`)
   }
   return result
 }
@@ -283,6 +286,10 @@ var object_style = function (css, el) {
   }
 }
 
+/**
+  * (animateClass → array)
+    - defined all animation
+**/
 var animateClass = [
   'bounce', 'flash', 'pulse', 'rubberBand', 'shake', 'headShake', 'swing', 'tada',
   'wobble', 'jello', 'bounceIn', 'bounceInDown', 'bounceInLeft', 'bounceInRight',
@@ -297,6 +304,11 @@ var animateClass = [
   'zoomInUp', 'zoomOut', 'zoomOutDown', 'zoomOutLeft', 'zoomOutRight', 'zoomOutUp', 'slideInDown', 'slideInLeft',
   'slideInRight', 'slideInUp', 'slideOutDown', 'slideOutLeft', 'slideOutRight', 'slideOutUp'
 ]
+
+/**
+  * (data → string)
+    - generate inverse direction
+**/
 var animate_inverse = function (data) {
   var inverse = [
     ['In', 'Out'],
@@ -316,6 +328,11 @@ var animate_inverse = function (data) {
   }
   return result
 }
+
+/**
+  * (an → string, type → string)
+    - generate animation direction
+**/
 var animate_direction = function (an, type) {
   var data = an
   var animate
@@ -333,7 +350,8 @@ var animate_direction = function (an, type) {
       result = animate[1] + animate_inverse(animate[2])  + animate[3]
     }
     if (type === 'toggle.inverse' && isDefine(animate_inverse(animate[2]))) {
-      result = animate[1] + animate_inverse(animate[2])  + (isDefine(animate_inverse(animate[3])) ? animate_inverse(animate[3]) : animate[3])
+      var direct = isDefine(animate_inverse(animate[3])) ? animate_inverse(animate[3]) : animate[3]
+      result = animate[1] + animate_inverse(animate[2])  + direct
     }
   }
   if (/^[a-z]+[A-Z][a-z]+[A-Z][a-z]+$/.test(data)) {
@@ -342,7 +360,8 @@ var animate_direction = function (an, type) {
       result = animate[1] + animate_inverse(animate[2])  + animate[3]
     }
     if (type === 'toggle.inverse' && isDefine(animate_inverse(animate[2]))) {
-      result = animate[1] + animate_inverse(animate[2])  + (isDefine(animate_inverse(animate[3])) ? animate_inverse(animate[3]) : animate[3])
+      var direct = isDefine(animate_inverse(animate[3])) ? animate_inverse(animate[3]) : animate[3]
+      result = animate[1] + animate_inverse(animate[2])  + direct
     }
   }
   if (/^[a-z]+[A-Z][a-z]+[A-Z][a-z]+[A-Z][a-z]+$/.test(data)) {
@@ -351,35 +370,52 @@ var animate_direction = function (an, type) {
       result = animate[1] + animate_inverse(animate[2])  + animate[3]
     }
     if (type === 'toggle.inverse' && isDefine(animate_inverse(animate[2]))) {
-      result = animate[1] + animate_inverse(animate[2])  + (isDefine(animate_inverse(animate[3])) ? animate_inverse(animate[3]) : animate[3]) + 
-      (isDefine(animate_inverse(animate[4])) ? animate_inverse(animate[4]) : animate[4])
+      var direct = isDefine(animate_inverse(animate[3])) ? animate_inverse(animate[3]) : animate[3] + 
+      isDefine(animate_inverse(animate[4])) ? animate_inverse(animate[4]) : animate[4]
+      result = animate[1] + animate_inverse(animate[2])  + direct
     }
   }
   return result
 }
 
+/**
+  * (el →  dom, callback → function)
+    - looping querySelectorAll
+**/
+var element_looping = function (el, callback) {
+  var size = el.length
+  var i = 0
+  for (i; i < size; i++) {
+    callback(el[i], i)
+  }
+}
+/**
+  * (cls → string | array, el → dom, mdf → string)
+    - inview animation handler
+**/
 var object_animation = function (cls, el, mdf) {
   if (isString(cls)) {
-    if (isDefine(mdf) && hasClass(el, cls) && mdf !== 'infinite') {
-      var rmClass = {}
-      rmClass[cls] = false
-      object_class(rmClass, el)
+    if (isDefine(mdf)) {
       var inverseAnim = animate_direction(cls, mdf)
-      if (isDefine(inverseAnim) && animateClass.indexOf(inverseAnim) >= 0){
-        object_class(inverseAnim, el)
-      }
-    } else {
-      var inverseAnim = animate_direction(cls, mdf)
-      if (isDefine(mdf) && isDefine(inverseAnim) && hasClass(el, inverseAnim)) {
+      if (isDefine(inverseAnim) && hasClass(el, inverseAnim)) {
         var rmClass = {}
         rmClass[inverseAnim] = false
         object_class(rmClass, el)
       }
-      if (hasClass(el, cls)) {
-        var rmClass = {}
-        rmClass[cls] = false
-        object_class(rmClass, el)
+    }
+    var hasToggling = false
+    if (hasClass(el, cls)) {
+      hasToggling = true
+      var rmClass = {}
+      rmClass[cls] = false
+      object_class(rmClass, el)
+    }
+    if (isDefine(mdf) && hasToggling) {
+      var inverseAnim = animate_direction(cls, mdf)
+      if (isDefine(inverseAnim)){
+        object_class(inverseAnim, el)
       }
+    } else {
       var animate = !hasClass(el, 'animated') ? ['animated', cls] : cls
       object_class(animate, el)
     }
@@ -389,19 +425,16 @@ var object_animation = function (cls, el, mdf) {
     var size = cls.length
     var iClass
     var animate
-    console.log('check if defined')
     for (i; i < size; i++) {
       if (hasClass(el, cls[i])) {
         var rmClass = {}
         rmClass[cls[i]] = false
         iClass = i
-        console.log(rmClass)
         object_class(rmClass, el)
       }
     }
     if (isDefine(mdf) && mdf === 'toggle') {
-      var getClass = !isDefine(iClass) && size >= 0 ? cls[0] : (iClass + 1) < size ? cls[(iClass + 1)] : cls[0]
-      console.log(getClass)
+      var getClass = isDefine(iClass) && size > 0 && (iClass + 1) < size ?  cls[(iClass + 1)] : cls[0]
       animate = !hasClass(el, 'animated') ? ['animated', getClass] : getClass
     } else {
       animate = !hasClass(el, 'animated') ? cls.push('animated') : cls
@@ -409,9 +442,38 @@ var object_animation = function (cls, el, mdf) {
     object_class(animate, el)
   }
 }
+/**
+  * (el → dom)
+    - check and get animation attribute
+**/
+var animate_attribute = function (el) {
+  var normal = el.querySelectorAll('[animate]')
+  var toggle = el.querySelectorAll('[animate-toggle]')
+  var inverse = el.querySelectorAll('[animate-toggle-inverse]')
+  if (normal !== null) element_looping(normal, function (els) {
+    var attr = els.getAttribute('animate')
+    object_animation(attr, els)
+  })
+  if (toggle !== null) element_looping(toggle, function (els) {
+    var attr = els.getAttribute('animate-toggle')
+    object_animation(attr, els, 'toggle')
+  })
+  if (inverse !== null) element_looping(inverse, function (els) {
+    var attr = els.getAttribute('animate-toggle-inverse')
+    object_animation(attr, els, 'toggle.inverse')
+  })
+}
 
 /**
-  * (el →  dom, $bd → object{*})
+  * (parent → string, el → dom)
+    - inview directive handler
+**/
+var object_parent = function (parent, el) {
+  if (parent === 'animate') animate_attribute (el)
+}
+
+/**
+  * (el → dom, $bd → object{*})
     - inview directive handler
 **/
 var _$elinview = function (el, $bd) {
@@ -450,30 +512,28 @@ var _$elinview = function (el, $bd) {
       _element_enter(el, classId)
       // end magic properties
 
-      if (_$arg !== 'undefined' && objLength($bd.modifiers) === 0 && isDefine(elvalue)){
-          _$arg === 'class' && object_class(elvalue,el)
-          _$arg === 'style' && object_style(elvalue,el)
-          _$arg === 'animate' && object_animation(elvalue,el)
-          if (_$arg === 'enter') isFunc(elvalue) ? elvalue(el) : console.warn('[in-view:${$bd.expression}] invalid method')
+      if (_$arg !== 'undefined' && objLength($bd.modifiers) >= 0 && isDefine(elvalue)){
+          _$arg === 'class' && object_class(elvalue, el)
+          _$arg === 'style' && object_style(elvalue, el)
+          _$arg === 'animate' && object_animation(elvalue, el)
+          _$arg === 'parent' && object_parent(elvalue, el)
+          if (_$arg === 'enter') isFunc(elvalue) ? elvalue(el) : console.warn(`[in-view:${$bd.expression}] invalid method`)
       }
 
-      if (_$arg !== 'undefined' && _$arg === 'animate' && objLength($bd.modifiers) > 0 && isDefine(elvalue)){
-        // register modifiers
-        var $mdf = object_modifiers($bd.modifiers)
-        if ($mdf === 'toggle' || $mdf === 'toggle.inverse') object_animation(elvalue, el, $mdf)
-      }
       
       if (_$arg === 'on' || _$arg === 'once' && objLength($bd.modifiers) > 0 && isDefine(elvalue)){
         // register modifiers
         var $mdf = object_modifiers($bd.modifiers)
         // modifiers enter
-        if ($mdf === 'enter') isFunc(elvalue) ? elvalue(el) : console.warn('[in-view:${$bd.expression}] invalid method')
+        if ($mdf === 'enter') isFunc(elvalue) ? elvalue(el) : console.warn(`[in-view:${$bd.expression}] invalid method`)
         // modifiers class
         $mdf === 'class' && object_class(elvalue, el)
         // modifiers style
         $mdf === 'style' && object_style(elvalue, el)
         // modifiers animate
         $mdf === 'animate' && object_animation(elvalue, el)
+        // set parent arguments
+        $mdf === 'parent' && object_parent(elvalue, el)
       }
 
       isDefine(funcEvent.enter) && funcEvent.enter(el)
@@ -489,16 +549,15 @@ var _$elinview = function (el, $bd) {
       // end magic properties
 
       if (_$arg !== 'undefined' && isDefine(elvalue)) {
-        if (_$arg === 'leave' && objLength($bd.modifiers)===0) isFunc(elvalue) ? elvalue(el) : console.warn('[in-view:${$bd.expression}] invalid method')
+        if (_$arg === 'leave' && objLength($bd.modifiers)===0) isFunc(elvalue) ? elvalue(el) : console.warn(`[in-view:${$bd.expression}] invalid method`)
         if (objLength($bd.modifiers) > 0 && object_modifiers($bd.modifiers) === 'leave') {
           _$arg === 'class' && object_class(elvalue,el)
           _$arg === 'style' && object_style(elvalue,el)
           _$arg === 'animate' && object_animation(elvalue,el)
+          _$arg === 'parent' && object_parent(elvalue, el)
         }
-        if (_$arg === 'animate' && objLength($bd.modifiers) > 0 && isDefine(elvalue)){
-          // register modifiers
-          var $mdf = object_modifiers($bd.modifiers)
-          if ($mdf === 'toggle' || $mdf === 'toggle.inverse' || $mdf === 'toggle.infinite') object_animation(elvalue,el, $mdf)
+        if (_$arg === 'parent' && objLength($bd.modifiers) === 0) {
+          object_parent(elvalue, el)
         }
       }
 
@@ -507,13 +566,15 @@ var _$elinview = function (el, $bd) {
         // register modifiers
         var $mdf = object_modifiers($bd.modifiers)
         // modifiers leave
-        if ($mdf === 'leave') isFunc(elvalue) ? elvalue(el) : console.warn('[in-view:${$bd.expression}] invalid method')
+        if ($mdf === 'leave') isFunc(elvalue) ? elvalue(el) : console.warn(`[in-view:${$bd.expression}] invalid method`)
         // leave : class modifiers
         $mdf === 'class.leave' && object_class(elvalue,el)
         // leave : style modifiers
         $mdf === 'style.leave' && object_style(elvalue,el)
         // leave : animate modifiers
-        _$arg === 'animate' && object_animation(elvalue,el)
+        _$mdf === 'animate' && object_animation(elvalue,el)
+        // set parent arguments
+        $mdf === 'parent' && object_parent(elvalue, el)
       }
       isDefine(funcEvent.exit) && funcEvent.exit(el)
     }
