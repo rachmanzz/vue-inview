@@ -229,7 +229,7 @@ var $arg = function (arg) {
       result = arg
       break  
     default:
-      console.warn(`[in-view] argument ${arg} undefined`)
+      console.warn('[in-view] argument ${arg} undefined')
   }
   return result
 }
@@ -526,7 +526,7 @@ var _$elinview = function (el, $bd) {
           _$arg === 'style' && object_style(elvalue, el)
           _$arg === 'animate' && object_animation(elvalue, el)
           _$arg === 'parent' && object_parent(elvalue, el)
-          if (_$arg === 'enter') isFunc(elvalue) ? elvalue(el) : console.warn(`[in-view:${$bd.expression}] invalid method`)
+          if (_$arg === 'enter') isFunc(elvalue) ? elvalue(el) : console.warn('[in-view:${$bd.expression}] invalid method')
       }
 
       
@@ -534,7 +534,7 @@ var _$elinview = function (el, $bd) {
         // register modifiers
         var $mdf = object_modifiers($bd.modifiers)
         // modifiers enter
-        if ($mdf === 'enter') isFunc(elvalue) ? elvalue(el) : console.warn(`[in-view:${$bd.expression}] invalid method`)
+        if ($mdf === 'enter') isFunc(elvalue) ? elvalue(el) : console.warn('[in-view:${$bd.expression}] invalid method')
         // modifiers class
         $mdf === 'class' && object_class(elvalue, el)
         // modifiers style
@@ -558,7 +558,7 @@ var _$elinview = function (el, $bd) {
       // end magic properties
 
       if (_$arg !== 'undefined' && isDefine(elvalue)) {
-        if (_$arg === 'leave' && objLength($bd.modifiers)===0) isFunc(elvalue) ? elvalue(el) : console.warn(`[in-view:${$bd.expression}] invalid method`)
+        if (_$arg === 'leave' && objLength($bd.modifiers)===0) isFunc(elvalue) ? elvalue(el) : console.warn('[in-view:${$bd.expression}] invalid method')
         if (objLength($bd.modifiers) > 0 && object_modifiers($bd.modifiers) === 'leave') {
           _$arg === 'class' && object_class(elvalue,el)
           _$arg === 'style' && object_style(elvalue,el)
@@ -575,7 +575,7 @@ var _$elinview = function (el, $bd) {
         // register modifiers
         var $mdf = object_modifiers($bd.modifiers)
         // modifiers leave
-        if ($mdf === 'leave') isFunc(elvalue) ? elvalue(el) : console.warn(`[in-view:${$bd.expression}] invalid method`)
+        if ($mdf === 'leave') isFunc(elvalue) ? elvalue(el) : console.warn('[in-view:${$bd.expression}] invalid method')
         // leave : class modifiers
         $mdf === 'class.leave' && object_class(elvalue,el)
         // leave : style modifiers
