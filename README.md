@@ -137,7 +137,7 @@ Directive argument & modifiers
       </head>
 
 
-### Beta Directive for animate
+### Directive
 
     <element v-inview:animate="'fadeIn'"></element>
     <div v-inview:animate="'fadeInDown'"></div>
