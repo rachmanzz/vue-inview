@@ -156,6 +156,10 @@ Directive argument & modifiers
         <div :animate-toggle-inverse="'fadeInLeft'"></div>
         <div :animate-toggle="['fadeIn', 'fadeOut']"></div>
 
+
+## star
+If you like vue-inview, just give me star on this reposite https://github.com/rachmanzz/vue-inview
+
 ## Credit
 - this vue-inview base on https://github.com/camwiegert/in-view
 - shortid module https://github.com/dylang/shortid
