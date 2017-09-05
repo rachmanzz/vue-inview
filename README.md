@@ -12,8 +12,8 @@
 - v0.3.0 [version 0.3.0]
   1. fix : fix writen scripts
   2. add new comment style
-## Coming soon
-- v1.0.2 
+## New Release
+- v1.0.2 Beta
   1. animate.css combine
   2. toggle modifier
   3. improve writing script
@@ -125,6 +125,32 @@ Directive argument & modifiers
       )
 
 
+## animate.css
+
+### Usage
+- Include stylesheet
+
+    <head>
+      <link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    </head>
+
+### Beta Directive for animate
+
+    <element v-inview:animate="'fadeIn'"></element>
+    <div v-inview:animate="'fadeInDown'"></div>
+### animation scope
+
+    - First, define parent scope
+      
+        <div v-inview:parent="'animate'"></div>
+
+    - Animate on scope
+
+        <h2 :animate="'fadeIn'"></h2>
+        <div :animate-toggle="'fadeIn'"></div>
+        <div :animate-toggle-inverse="'fadeInLeft'"></div>
+        <div :animate-toggle="['fadeIn', 'fadeOut']"></div>
 
 ## Credit
 - this vue-inview base on https://github.com/camwiegert/in-view
