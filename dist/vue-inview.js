@@ -394,6 +394,15 @@ var element_looping = function (el, callback) {
     - inview animation handler
 **/
 var object_animation = function (cls, el, mdf) {
+  var display = el.getAttribute('animate-display')
+  if (display !== null) {
+    el.style.display= dispay
+  } else {
+    var none = el.getAttribute('animate-display-none')
+    if (none === null || none !== 'false') {
+      el.style.display= 'block'
+    } 
+  }
   if (isString(cls)) {
     if (isDefine(mdf)) {
       var inverseAnim = animate_direction(cls, mdf)
