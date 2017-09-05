@@ -130,10 +130,12 @@ Directive argument & modifiers
 ### Usage
 - Include stylesheet
 
-    <head>
-      <link rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
-    </head>
+
+      <head>
+        <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+      </head>
+
 
 ### Beta Directive for animate
 
@@ -141,11 +143,13 @@ Directive argument & modifiers
     <div v-inview:animate="'fadeInDown'"></div>
 ### animation scope
 
-    - First, define parent scope
+  - First, define parent scope
+
       
         <div v-inview:parent="'animate'"></div>
 
-    - Animate on scope
+  - Animate on scope
+  
 
         <h2 :animate="'fadeIn'"></h2>
         <div :animate-toggle="'fadeIn'"></div>
