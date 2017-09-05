@@ -149,7 +149,7 @@ Directive argument & modifiers
         <div v-inview:parent="'animate'"></div>
 
   - Animate on scope
-  
+
 
         <h2 :animate="'fadeIn'"></h2>
         <div :animate-toggle="'fadeIn'"></div>
@@ -159,3 +159,4 @@ Directive argument & modifiers
 ## Credit
 - this vue-inview base on https://github.com/camwiegert/in-view
 - shortid module https://github.com/dylang/shortid
+- animate module https://github.com/daneden/animate.css
