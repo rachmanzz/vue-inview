@@ -99,6 +99,8 @@ Directive argument & modifiers
   - threshold
     value type : only number and range between 0 - 1
 
+readmore in https://github.com/camwiegert/in-view#inviewoffsetoffset
+
 ### class & style
   - class
     1. object : `{'classname': true}` add class if true, remove class if false
