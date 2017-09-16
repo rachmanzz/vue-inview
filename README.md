@@ -1,3 +1,9 @@
+[![GitHub issues](https://img.shields.io/github/issues/rachmanzz/vue-inview.svg)](https://github.com/rachmanzz/vue-inview/issues)
+[![GitHub forks](https://img.shields.io/github/forks/rachmanzz/vue-inview.svg)](https://github.com/rachmanzz/vue-inview/network)
+[![GitHub stars](https://img.shields.io/github/stars/rachmanzz/vue-inview.svg)](https://github.com/rachmanzz/vue-inview/stargazers)
+[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/rachmanzz/vue-inview/master/LICENSE)
+[![Twitter](https://img.shields.io/twitter/url/https/github.com/rachmanzz/vue-inview.svg?style=social)](https://twitter.com/intent/tweet?text=Wow:&url=%5Bobject%20Object%5D)
+[![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=BLM5UBTEQKJXA)
 # vue-inview
 
 ## Tested
@@ -145,7 +151,7 @@ Directive argument & modifiers
 
   - First, define parent scope
 
-      
+
         <div v-inview:parent="'animate'"></div>
 
   - Animate on scope
