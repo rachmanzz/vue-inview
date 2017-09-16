@@ -64,8 +64,8 @@ Directive argument & modifiers
     import Inview from 'vueinview'
 
     Vue.use(Inview)
-    // v_inview.offset(/* offset */)
-    // v_inview.threshold(/* threshold */)
+    // Inview.offset(/* offset */)
+    // Inview.threshold(/* threshold */)
 
     new Vue({
         el: '#app',
@@ -92,6 +92,12 @@ Directive argument & modifiers
           }
         }
       })
+
+## Inview offset & threshold
+  - offset
+    value type : number or object
+  - threshold
+    value type : only number and range between 0 - 1
 
 ### class & style
   - class
