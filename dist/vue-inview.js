@@ -521,7 +521,7 @@ var _$elinview = function (el, $bd) {
       _element_enter(el, classId)
       // end magic properties
 
-      if (_$arg !== 'undefined' && objLength($bd.modifiers) >= 0 && isDefine(elvalue)){
+      if (_$arg !== 'undefined' && objLength($bd.modifiers) === 0 && isDefine(elvalue)){
           _$arg === 'class' && object_class(elvalue, el)
           _$arg === 'style' && object_style(elvalue, el)
           _$arg === 'animate' && object_animation(elvalue, el)
@@ -581,7 +581,7 @@ var _$elinview = function (el, $bd) {
         // leave : style modifiers
         $mdf === 'style.leave' && object_style(elvalue,el)
         // leave : animate modifiers
-        $mdf === 'animate' && object_animation(elvalue,el)
+        $mdf === 'animate.leave' && object_animation(elvalue,el)
         // set parent arguments
         $mdf === 'parent' && object_parent(elvalue, el)
       }
