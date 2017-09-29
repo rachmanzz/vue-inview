@@ -105,7 +105,7 @@ var _element_enter = function (el, classid) {
       }
     }
   }
-  
+
   // push an element
   if (!hasObj_Array(createEl.$enter, 'class', classid).is) createEl.$enter.push({class: classid, el: el})
 }
@@ -227,7 +227,7 @@ var $arg = function (arg) {
       break
     case 'parent':
       result = arg
-      break  
+      break
     default:
       console.warn('[in-view] argument ${arg} undefined')
   }
@@ -337,7 +337,7 @@ var animate_direction = function (an, type) {
   var data = an
   var animate
   var result
-  
+
   if (/^[a-z]+[A-Z][a-z]+$/.test(data)) {
     animate = data.match(/^([a-z]+)([A-Z][a-z]+)$/)
     if (type === 'toggle' && isDefine(animate_inverse(animate[2]))) {
@@ -370,7 +370,7 @@ var animate_direction = function (an, type) {
       result = animate[1] + animate_inverse(animate[2])  + animate[3]
     }
     if (type === 'toggle.inverse' && isDefine(animate_inverse(animate[2]))) {
-      var direct = isDefine(animate_inverse(animate[3])) ? animate_inverse(animate[3]) : animate[3] + 
+      var direct = isDefine(animate_inverse(animate[3])) ? animate_inverse(animate[3]) : animate[3] +
       isDefine(animate_inverse(animate[4])) ? animate_inverse(animate[4]) : animate[4]
       result = animate[1] + animate_inverse(animate[2])  + direct
     }
@@ -401,7 +401,7 @@ var object_animation = function (cls, el, mdf) {
     var none = el.getAttribute('animate-display-none')
     if (none === null || none !== 'false') {
       el.style.display= 'block'
-    } 
+    }
   }
   if (isString(cls)) {
     if (isDefine(mdf)) {
@@ -529,7 +529,7 @@ var _$elinview = function (el, $bd) {
           if (_$arg === 'enter') isFunc(elvalue) ? elvalue(el) : console.warn('[in-view:${$bd.expression}] invalid method')
       }
 
-      
+
       if (_$arg === 'on' || _$arg === 'once' && objLength($bd.modifiers) > 0 && isDefine(elvalue)){
         // register modifiers
         var $mdf = object_modifiers($bd.modifiers)
@@ -581,7 +581,7 @@ var _$elinview = function (el, $bd) {
         // leave : style modifiers
         $mdf === 'style.leave' && object_style(elvalue,el)
         // leave : animate modifiers
-        _$mdf === 'animate' && object_animation(elvalue,el)
+        $mdf === 'animate' && object_animation(elvalue,el)
         // set parent arguments
         $mdf === 'parent' && object_parent(elvalue, el)
       }
