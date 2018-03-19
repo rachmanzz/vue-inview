@@ -82,7 +82,6 @@ _classList.prototype.get = function () {
 _classList.prototype.hasClass = function (className) {
   var classNames = this.el.className
   var listClass = classNames.split(' ')
-  console.log(listClass.indexOf(className) >= 0)
   if(listClass.indexOf(className) >= 0) {
     return true
   }
