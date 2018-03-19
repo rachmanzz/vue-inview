@@ -80,12 +80,15 @@ _classList.prototype.get = function () {
   return this.el.classList
 }
 _classList.prototype.hasClass = function (className) {
-  var className = this.el.className
-  var listClass = className.split(' ')
-  if(listClass.indexOf(className) >= 0) {
-    return true
+  if (this.old) {
+    var className = this.el.className
+    var listClass = className.split(' ')
+    if(listClass.indexOf(className) >= 0) {
+      return true
+    }
+    return false
   }
-  return false
+  return hasClass(this.el, className)
 }
 
 var classList = function (el) { return new _classList(el) }
