@@ -15,6 +15,8 @@
 |tested|tested|
 
 ## Releases version
+- v1.0.3 Beta
+  1. fix : _$mdf is not defined
 - v1.0.2 Beta
   1. animate.css combine
   2. toggle modifier
@@ -25,8 +27,8 @@
   1. fix : fix writen scripts
   2. add new comment style
 ## New Release
-- v1.0.3 Beta
-  1. fix : _$mdf is not defined
+- v1.0.4 Beta
+  1. fix : classList for old browser
 
 ## Install
 
