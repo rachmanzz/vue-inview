@@ -11,6 +11,84 @@ isNumber = function (v) { return typeof v === 'number' },
 isFunc   = function (v) { return typeof v === 'function' },
 isArray  = function (v) { return Array.isArray(v) },
 isObject = function (v) { return !isArray(v) && typeof v === 'object' }
+
+// new object function
+// for unsupport classList
+var nativeClasList = function (el) {
+  var className = el.className
+  var listClass = el.split(' ')
+  this.classList = listClass
+  this.el = el
+}
+nativeClasList.prototype.get = function () {
+  return this.classList
+}
+nativeClasList.prototype.add = function (className) {
+  var classList = this.classList
+  if (classList.indexOf(className) == -1) {
+    classList.push(className)
+    this.el.className = classList.join(' ')
+  }
+}
+
+
+nativeClasList.prototype.remove = function (className) {
+  var classList = this.classList
+  if (classList.indexOf(className) >= 0) {
+    var index = classList.indexOf(className)
+    classList.splice(index, 1)
+    this.el.className = classList.join(' ')
+  }
+}
+// define classList object
+var _classList = function (el) {
+  this.el = el
+  if(typeof el.classList !== 'undefined') {
+    // if classList support
+    this.old = false
+  } else {
+    // browser class unsupport classList
+    this.classList = new nativeClasList(el)
+    this.old = true
+  }
+}
+// add classList
+_classList.prototype.add = function (className) {
+  if (this.old) {
+    this.classList.add(className)
+    return
+  }
+  if (!classList(el).hasClass(className)) {
+    this.el.classList.add(className)
+  }
+}
+// remove classList
+_classList.prototype.remove = function (className) {
+  if (this.old) {
+    this.classList.remove(className)
+    return
+  }
+  if (classList(el).hasClass(className)) {
+    this.el.classList.remove(className)
+  }
+}
+// get Class List
+_classList.prototype.get = function () {
+  if (this.old) {
+    return this.classList.get()
+  }
+  return this.el.classList
+}
+_classList.prototype.hasClass = function (className) {
+  var className = this.el.className
+  var listClass = el.split(' ')
+  if(listClass.indexOf(className) >= 0) {
+    return true
+  }
+  return false
+}
+
+var classList = function (el) { return new _classList(el) }
 /**
   * return boolen
     - check if key has in object
@@ -248,19 +326,19 @@ var defaultAction = function (bidd, callback) {
     - add and remove class of element
 **/
 var object_class = function (clss, el) {
-  if (isString(clss)) el.classList.add(clss)
+  if (isString(clss)) classList(el).add(clss)
   if (isObject(clss)) {
     var classArr = el.className.split(' ')
     var key
     for (key in clss) {
-      if (classArr.indexOf(key) && clss[key] === false) el.classList.remove(key)
-      if (clss.hasOwnProperty(key) && clss[key] === true) el.classList.add(key)
+      if (classArr.indexOf(key) && clss[key] === false) classList(el).remove(key)
+      if (clss.hasOwnProperty(key) && clss[key] === true) classList(el).add(key)
     }
   }
   if (isArray(clss)) {
     var i
     for (i = 0;i < clss.length; i++) {
-      el.classList.add(clss[i])
+      classList(el).add(clss[i])
     }
   }
 }
@@ -406,14 +484,14 @@ var object_animation = function (cls, el, mdf) {
   if (isString(cls)) {
     if (isDefine(mdf)) {
       var inverseAnim = animate_direction(cls, mdf)
-      if (isDefine(inverseAnim) && hasClass(el, inverseAnim)) {
+      if (isDefine(inverseAnim) && classList(el).hasClass(inverseAnim)) {
         var rmClass = {}
         rmClass[inverseAnim] = false
         object_class(rmClass, el)
       }
     }
     var hasToggling = false
-    if (hasClass(el, cls)) {
+    if (classList(el).hasClass(cls)) {
       hasToggling = true
       var rmClass = {}
       rmClass[cls] = false
@@ -425,7 +503,7 @@ var object_animation = function (cls, el, mdf) {
         object_class(inverseAnim, el)
       }
     } else {
-      var animate = !hasClass(el, 'animated') ? ['animated', cls] : cls
+      var animate = !classList(el).hasClass('animated') ? ['animated', cls] : cls
       object_class(animate, el)
     }
   }
@@ -435,7 +513,7 @@ var object_animation = function (cls, el, mdf) {
     var iClass
     var animate
     for (i; i < size; i++) {
-      if (hasClass(el, cls[i])) {
+      if (classList(el).hasClass(cls[i])) {
         var rmClass = {}
         rmClass[cls[i]] = false
         iClass = i
@@ -444,9 +522,9 @@ var object_animation = function (cls, el, mdf) {
     }
     if (isDefine(mdf) && mdf === 'toggle') {
       var getClass = isDefine(iClass) && size > 0 && (iClass + 1) < size ?  cls[(iClass + 1)] : cls[0]
-      animate = !hasClass(el, 'animated') ? ['animated', getClass] : getClass
+      animate = !classList(el).hasClass('animated') ? ['animated', getClass] : getClass
     } else {
-      animate = !hasClass(el, 'animated') ? cls.push('animated') : cls
+      animate = !classList(el).hasClass('animated') ? cls.push('animated') : cls
     }
     object_class(animate, el)
   }
@@ -489,10 +567,10 @@ var _$elinview = function (el, $bd) {
 
   // generate class indetities
   var classId = shortid.generate()
-  var elSize = el.classList.length
+  var elSize = classList(el).get().length
 
   // register class element
-  el.classList.add(classId)
+  classList(el).add(classId)
   createEl.register.push({classid: classId,rawName: $bd.rawName})
 
   // if directive value not registed
@@ -599,12 +677,12 @@ var _directObj = {
     _$elinview(el,$bd)
   },
   componentUpdated: function (el,$bd) {
-    var elSize = el.classList.length
+    var elSize = classList(el).get().length
     var getclass
     // check the class has been registered
     var i
     for (i = 0; i < elSize; i++) {
-      if (isDefine(obsclassreg($bd.rawName)) && obsclassreg($bd.rawName)===el.classList[i]) getclass = el.classList[i]
+      if (isDefine(obsclassreg($bd.rawName)) && obsclassreg($bd.rawName)===classList(el).get()[i]) getclass = classList(el).get()[i]
     }
     if (isDefine(getclass) && isDefine($bd.value)) createEl.values[getclass] = $bd.value
   }
