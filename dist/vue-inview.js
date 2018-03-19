@@ -16,7 +16,7 @@ isObject = function (v) { return !isArray(v) && typeof v === 'object' }
 // for unsupport classList
 var nativeClasList = function (el) {
   var className = el.className
-  var listClass = el.split(' ')
+  var listClass = className.split(' ')
   this.classList = listClass
   this.el = el
 }
@@ -81,7 +81,7 @@ _classList.prototype.get = function () {
 }
 _classList.prototype.hasClass = function (className) {
   var className = this.el.className
-  var listClass = el.split(' ')
+  var listClass = className.split(' ')
   if(listClass.indexOf(className) >= 0) {
     return true
   }
