@@ -58,7 +58,7 @@ _classList.prototype.add = function (className) {
     this.classList.add(className)
     return
   }
-  if (!classList(el).hasClass(className)) {
+  if (!this.hasClass(className)) {
     this.el.classList.add(className)
   }
 }
@@ -68,7 +68,7 @@ _classList.prototype.remove = function (className) {
     this.classList.remove(className)
     return
   }
-  if (classList(el).hasClass(className)) {
+  if (this.hasClass(className)) {
     this.el.classList.remove(className)
   }
 }
