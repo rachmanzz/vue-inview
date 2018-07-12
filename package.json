@@ -4,11 +4,18 @@
   "description": "vue in-view",
   "main": "./dist/vue-inview.min.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "gulp"
   },
   "dependencies": {
+    "browserify": "^16.2.2",
+    "gulp": "^3.9.1",
+    "gulp-sourcemaps": "^2.6.4",
+    "gulp-uglify": "^3.0.0",
+    "gulp-util": "^3.0.8",
     "in-view": "^0.6.1",
-    "shortid": "^2.2.6"
+    "shortid": "^2.2.6",
+    "vinyl-buffer": "^1.0.1",
+    "vinyl-source-stream": "^2.0.0"
   },
   "repository": {
     "type": "git",
