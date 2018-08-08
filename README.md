@@ -6,6 +6,7 @@
 [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=BLM5UBTEQKJXA)
 [![HitCount](http://hits.dwyl.io/rachmanzz/rachmanzz/vue-inview.svg)](http://hits.dwyl.io/rachmanzz/rachmanzz/vue-inview)
 [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/rachmanzz/vue-inview/issues)
+[![Gitter](https://img.shields.io/gitter/room/nwjs/nw.js.svg)](https://gitter.im/vue-inview/)
 # vue-inview
 
 ## Tested
@@ -180,6 +181,10 @@ readmore in https://github.com/camwiegert/in-view#inviewoffsetoffset
 
 ## star
 If you like vue-inview, just give me star on this reposite https://github.com/rachmanzz/vue-inview
+
+## Gitter Chat
+[![Gitter](https://img.shields.io/gitter/room/nwjs/nw.js.svg)](https://gitter.im/vue-inview/)
+Learn, Ask, and give a solution problem
 
 ## Credit
 - this vue-inview base on https://github.com/camwiegert/in-view
