@@ -11,9 +11,9 @@
 
 ## Tested
 
-|chrome|firefox|
-|------|-------|
-|tested|tested|
+|chrome|firefox|edge|
+|------|-------|------|
+|tested|tested|tested|
 
 ## Releases version
 - v1.0.4 Beta
