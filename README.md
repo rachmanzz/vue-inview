@@ -27,12 +27,13 @@
 - v1.0.6-beta.1
   1. add : add inview component
 
+
+
 ## Install
-
+  - latest
     npm install --save vueinview
-    or later version
-    npm install --save rachmanzz/vue-inview
-
+  - beta
+    npm install --save vueinview@1.0.6-beta.1
 
 ## Usage
 ### Vue Directive
