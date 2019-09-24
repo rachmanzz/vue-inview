@@ -16,20 +16,16 @@
 |tested|tested|tested|
 
 ## Releases version
+- v1.0.5
+  1. add : add class prefix
 - v1.0.4 Beta
   1. fix : classList for old browser
 - v1.0.3 Beta
   1. fix : _$mdf is not defined
-- v1.0.2 Beta
-  1. animate.css combine
-  2. toggle modifier
-  3. improve writing script
-- v1.0.1 [version 1.0.1]
-  1. fix : undefined class
 
 ## New Release
-- v1.0.5
-  1. add : add class prefix
+- v1.0.6-beta.1
+  1. add : add inview component
 
 ## Install
 
@@ -179,7 +175,7 @@ readmore in https://github.com/camwiegert/in-view#inviewoffsetoffset
 
   check sample here https://rachmanzz.github.io/vue-inview/
 
-### Components
+### Components [new]
   - Import component
       - `import inview from 'vueinview/components/Inview'`
   - Bind Attribute
