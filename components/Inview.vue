@@ -1,6 +1,6 @@
 <template>
-    <div>
-        <slot name="inview" v-bind="{ action, hasEnter, hasLeave }" v-inview:on="inviewAction"></slot>
+    <div v-inview:on="inviewAction">
+        <slot name="inview" v-bind="{ action, hasEnter, hasLeave }"></slot>
     </div>
 </template>
 
