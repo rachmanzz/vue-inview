@@ -31,9 +31,11 @@
 
 ## Install
   - latest
-    npm install --save vueinview
+
+      `npm install --save vueinview`
   - beta
-    npm install --save vueinview@1.0.6-beta.1
+
+      `npm install --save vueinview@1.0.6-beta.1`
 
 ## Usage
 ### Vue Directive
