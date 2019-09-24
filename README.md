@@ -179,6 +179,33 @@ readmore in https://github.com/camwiegert/in-view#inviewoffsetoffset
 
   check sample here https://rachmanzz.github.io/vue-inview/
 
+### Components
+  - Import component
+      - `import inview from 'vueinview/components/Inview'`
+  - Bind Attribute
+      - enter → function → optional
+      - leave → function → optional
+  - slot
+      - name: inview
+      - slot-scope
+          - action → text
+              - ``
+              - `enter`
+              - `leave`
+          - hasEnter → boolean
+          - hasLeave → boolean
+  - usage
+
+
+        <inview>
+          <template slot="inview" slot-scope="{ action, hasEnter, hasLeave }">
+            <div>{{action === 'enter' ? 'element entered': ''}}</div>
+          </template>
+        </inview>
+
+  
+
+
 ## star
 If you like vue-inview, just give me star on this reposite https://github.com/rachmanzz/vue-inview
 
