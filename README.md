@@ -3,7 +3,6 @@
 [![GitHub stars](https://img.shields.io/github/stars/rachmanzz/vue-inview.svg)](https://github.com/rachmanzz/vue-inview/stargazers)
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/rachmanzz/vue-inview/master/LICENSE)
 [![Twitter](https://img.shields.io/twitter/url/https/github.com/rachmanzz/vue-inview.svg?style=social)](https://twitter.com/intent/tweet?text=Wow:&url=%5Bobject%20Object%5D)
-[![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=BLM5UBTEQKJXA)
 [![HitCount](http://hits.dwyl.io/rachmanzz/rachmanzz/vue-inview.svg)](http://hits.dwyl.io/rachmanzz/rachmanzz/vue-inview)
 [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/rachmanzz/vue-inview/issues)
 [![Gitter](https://img.shields.io/gitter/room/nwjs/nw.js.svg)](https://gitter.im/vue-inview/)
