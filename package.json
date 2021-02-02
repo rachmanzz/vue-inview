@@ -1,8 +1,8 @@
 {
   "name": "vueinview",
-  "version": "1.0.6-beta.1",
+  "version": "2.0.0-next",
   "description": "vue in-view",
-  "main": "./dist/vue-inview.min.js",
+  "main": "./dist/vueinview-next.min.js",
   "scripts": {
     "build": "gulp"
   },
@@ -10,7 +10,11 @@
     "in-view": "^0.6.1",
     "nanoid": "^3.1.20"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "rollup": "^2.38.4",
+    "rollup-plugin-babel": "^4.4.0",
+    "uglify-js": "^3.12.6"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/rachmanzz/vue-inview.git"
