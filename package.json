@@ -8,10 +8,9 @@
   },
   "dependencies": {
     "in-view": "^0.6.1",
-    "shortid": "^2.2.6"
+    "nanoid": "^3.1.20"
   },
-  "devDependencies": {
-  },
+  "devDependencies": {},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/rachmanzz/vue-inview.git"
