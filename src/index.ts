@@ -1,17 +1,21 @@
 import inView from "in-view"
+import {directive} from "./inview-action"
 
 interface vueInview {
-    install(): void,
-    threshold(): void
+    install(vue: any, option?: number | {top?: number, right?: number, bottom?: number, left: number}): void,
+    threshold(arg: number): void
+    offset(arg: number | {top?: number, right?: number, bottom?: number, left: number}): void
 }
-const vueInview = function () {}
 
-vueInview.install = function (Vue: any, option?: number | {top?: number, right?: number, bottom?: number, left: number}) {
+const vueInview: vueInview = Object.create(null)
+
+vueInview.install = function (vue, option) {
     if (option) inView.offset(option)
+    vue.directive("inview", directive)
 }
 
-vueInview.threshold = (arg: any) => { inView.threshold(arg) }
+vueInview.threshold = (arg) => { inView.threshold(arg) }
 
-vueInview.offset = (arg: any) => { inView.offset(arg) }
+vueInview.offset = (arg) => { inView.offset(arg) }
 
 export default vueInview
