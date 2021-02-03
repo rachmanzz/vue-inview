@@ -18,6 +18,9 @@ const VueInview = (el: HTMLElement, binding: any): void => {
         return
     }
 
+    const setupInView = inView("." + classID)
+    if (defineHandler === "on") setupInView.on("enter")
+
 }
 
 const VueInviewUpdated = (el: HTMLElement, binding: any): void => {
