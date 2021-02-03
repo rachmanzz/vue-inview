@@ -7,7 +7,7 @@
 [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/rachmanzz/vue-inview/issues)
 [![Gitter](https://img.shields.io/gitter/room/nwjs/nw.js.svg)](https://gitter.im/vue-inview/)
 # vue-inview V2 
-This Version is under development, so, if you wish to use vueinview, please [click HERE] (https://github.com/rachmanzz/vue-inview/tree/v1.0.7)
+This Version is under development, so, if you wish to use vueinview, please [click HERE](https://github.com/rachmanzz/vue-inview/tree/v1.0.7)
 
 
 
