@@ -13,13 +13,6 @@ export const extraArgument = function (arg: string): string {
         case 'leave':
             result = arg
             break
-        case 'animate':
-            result = arg
-            break
-        case 'parent':
-            result = arg
-            break
-    
         default:
             result = "none";
     }
